@@ -1,0 +1,31 @@
+# ── Frontend ───────────────────────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+
+# ── Backend ────────────────────────────────────────────────────────────
+backend/target/
+backend/*.log
+
+# ── IDE / OS ───────────────────────────────────────────────────────────
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+
+# ── Secrets ────────────────────────────────────────────────────────────
+*.env
+.env.*
+application-local.properties
+
+# ── Datos sensibles ────────────────────────────────────────────────────
+users.json
+
+# ── Claude Code internals ───────────────────────────────────────────────
+.agents/
+.claude/settings.local.json
+.claude/agent-memory/
+
+# ── Misc ───────────────────────────────────────────────────────────────
+*.log

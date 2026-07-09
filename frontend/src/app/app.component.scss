@@ -1,0 +1,105 @@
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #0F1117 !important;
+  border-bottom: 1px solid #1B4332;
+  box-shadow: 0 1px 0 rgba(82,183,120,0.15);
+  height: 56px !important;
+
+  .toolbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    user-select: none;
+  }
+
+  .toolbar-logo {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+    color: #52B788;
+  }
+
+  .toolbar-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    color: #fff;
+  }
+
+  .toolbar-spacer { flex: 1; }
+
+  .nav-link {
+    color: rgba(255,255,255,0.6) !important;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    &:hover { color: rgba(255,255,255,0.9) !important; }
+  }
+
+  .theme-btn {
+    color: rgba(255,255,255,0.5) !important;
+    &:hover { color: rgba(255,255,255,0.85) !important; }
+  }
+
+  .toolbar-user {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: rgba(255,255,255,0.75);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 0 8px;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      color: #52B788;
+    }
+  }
+
+  .logout-btn {
+    color: rgba(255,255,255,0.5) !important;
+    font-size: 13px;
+    &:hover { color: rgba(255,255,255,0.85) !important; }
+  }
+
+  .new-btn {
+    background: #1B4332 !important;
+    color: #fff !important;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    border-radius: 6px !important;
+    padding: 0 16px !important;
+    margin-left: 8px;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      margin-right: 4px;
+    }
+
+    &:hover { background: #2D6A4F !important; }
+  }
+}
+
+.app-content {
+  min-height: calc(100vh - 56px);
+  background: var(--paper);
+}

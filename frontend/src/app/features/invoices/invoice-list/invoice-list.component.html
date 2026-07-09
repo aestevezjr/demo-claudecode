@@ -1,0 +1,77 @@
+<div class="page-container">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Facturas</h1>
+      <p class="page-subtitle">Gestiona todos tus documentos de cobro</p>
+    </div>
+    <button mat-raised-button color="primary" routerLink="/invoices/new">
+      <mat-icon>add</mat-icon>
+      Nueva Factura
+    </button>
+  </div>
+
+  <mat-card class="table-card">
+    @if (isLoading()) {
+      <div class="loading-container">
+        <mat-spinner diameter="36"></mat-spinner>
+      </div>
+    } @else if (invoices().length === 0) {
+      <div class="empty-state">
+        <mat-icon class="empty-icon">receipt_long</mat-icon>
+        <h3>Sin facturas aún</h3>
+        <p>Crea tu primer documento de cobro</p>
+        <button mat-raised-button color="primary" routerLink="/invoices/new">
+          <mat-icon>add</mat-icon>
+          Nueva Factura
+        </button>
+      </div>
+    } @else {
+      <div class="list-header">
+        <span class="col-number">Número</span>
+        <span class="col-date">Fecha</span>
+        <span class="col-client">Cliente</span>
+        <span class="col-status">Estado</span>
+        <span class="col-amount">Total</span>
+        <span class="col-actions"></span>
+      </div>
+
+      @for (invoice of invoices(); track invoice.id) {
+        <div class="invoice-row status-{{ invoice.status.toLowerCase() }}"
+             (click)="viewInvoice(invoice.id!)">
+          <span class="col-number list-inv-number">{{ invoice.invoiceNumber }}</span>
+          <span class="col-date list-date">{{ invoice.issueDate | date:'dd/MM/yyyy' }}</span>
+          <span class="col-client list-client">{{ invoice.clientName }}</span>
+          <span class="col-status">
+            <app-status-badge [status]="invoice.status"></app-status-badge>
+          </span>
+          <span class="col-amount list-amount">
+            {{ invoice.total | currency:'USD':'symbol':'1.2-2' }}
+          </span>
+          <span class="col-actions" (click)="$event.stopPropagation()">
+            <button mat-icon-button class="action-btn" (click)="viewInvoice(invoice.id!)"
+                    matTooltip="Ver">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button class="action-btn" (click)="editInvoice(invoice.id!)"
+                    matTooltip="Editar">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button class="action-btn action-delete" (click)="deleteInvoice(invoice)"
+                    matTooltip="Eliminar">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </span>
+        </div>
+      }
+
+      <app-paginator
+        [currentPage]="currentPage()"
+        [totalPages]="totalPages()"
+        [pageSize]="pageSize()"
+        [pageSizeOptions]="pageSizeOptions"
+        [totalElements]="totalElements()"
+        (pageChange)="onPageChange($event)">
+      </app-paginator>
+    }
+  </mat-card>
+</div>

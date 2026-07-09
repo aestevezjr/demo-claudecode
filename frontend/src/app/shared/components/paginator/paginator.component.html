@@ -1,0 +1,47 @@
+@if (totalPages > 0) {
+  <div class="paginator">
+
+    <span class="paginator-info">
+      Mostrando {{ rangeStart }}–{{ rangeEnd }} de {{ totalElements }}
+    </span>
+
+    <nav class="paginator-nav" aria-label="Paginación">
+      <button class="pag-btn pag-text" (click)="goTo(0)" [disabled]="isFirst"
+              aria-label="Primera página">
+        Primera
+      </button>
+      <button class="pag-btn pag-icon" (click)="goTo(currentPage - 1)" [disabled]="isFirst"
+              aria-label="Anterior">
+        &#8249;
+      </button>
+
+      @for (page of pageWindow; track page) {
+        <button class="pag-btn pag-num"
+                [class.active]="page === currentPage"
+                (click)="goTo(page)"
+                [attr.aria-current]="page === currentPage ? 'page' : null">
+          {{ page + 1 }}
+        </button>
+      }
+
+      <button class="pag-btn pag-icon" (click)="goTo(currentPage + 1)" [disabled]="isLast"
+              aria-label="Siguiente">
+        &#8250;
+      </button>
+      <button class="pag-btn pag-text" (click)="goTo(totalPages - 1)" [disabled]="isLast"
+              aria-label="Última página">
+        Última
+      </button>
+    </nav>
+
+    <label class="paginator-size">
+      <span>Por página</span>
+      <select [value]="pageSize" (change)="onSizeChange($event)">
+        @for (opt of pageSizeOptions; track opt) {
+          <option [value]="opt">{{ opt }}</option>
+        }
+      </select>
+    </label>
+
+  </div>
+}

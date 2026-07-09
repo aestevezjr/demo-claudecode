@@ -1,0 +1,203 @@
+.page-container {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 28px 20px;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+
+  .page-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.2px;
+  }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 72px 0;
+}
+
+// ── Cards ──────────────────────────────────────────────────────────────
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-card {
+  margin-bottom: 16px;
+
+  ::ng-deep mat-card-header {
+    padding-bottom: 0;
+    .mat-mdc-card-title { font-size: 14px; font-weight: 600; color: var(--ink); }
+  }
+
+  ::ng-deep mat-card-content {
+    padding-top: 16px !important;
+  }
+}
+
+.items-card { margin-bottom: 16px; }
+
+// ── Fields ─────────────────────────────────────────────────────────────
+.fields-row {
+  display: flex;
+  gap: 14px;
+  .field-half { flex: 1; }
+}
+
+.field-full  { width: 100%; }
+.field-half  { width: calc(50% - 7px); }
+
+// Auto-generated invoice number placeholder
+.autogen-number {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--paper) 60%, transparent);
+  min-height: 56px;
+  box-sizing: border-box;
+
+  .autogen-icon {
+    color: var(--sage);
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .autogen-label {
+    margin: 0 0 2px;
+    font-size: 10.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--sage);
+  }
+
+  .autogen-value {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--ink);
+    font-style: italic;
+    font-family: var(--font-display);
+  }
+}
+
+// ── Line items ─────────────────────────────────────────────────────────
+.items-header {
+  display: grid;
+  grid-template-columns: 1fr 90px 120px 110px 44px;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--paper);
+  border-radius: var(--radius);
+  border: 1px solid var(--rule);
+  margin-bottom: 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--sage);
+}
+
+.item-row {
+  display: grid;
+  grid-template-columns: 1fr 90px 120px 110px 44px;
+  gap: 8px;
+  align-items: start;
+  margin-bottom: 4px;
+}
+
+.col-desc   { min-width: 0; }
+.col-qty    { max-width: 90px; }
+.col-price  { max-width: 120px; }
+.col-total  { max-width: 110px; }
+.col-action { max-width: 44px; display: flex; align-items: center; justify-content: center; padding-top: 8px; }
+
+.line-total {
+  display: flex;
+  align-items: center;
+  padding-top: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--brand);
+}
+
+.add-item-btn {
+  margin-top: 10px;
+  color: var(--sage) !important;
+  border-color: var(--rule) !important;
+  font-size: 13px;
+
+  mat-icon { font-size: 18px; width: 18px; height: 18px; margin-right: 4px; }
+  &:hover { border-color: var(--brand) !important; color: var(--brand) !important; }
+}
+
+// ── Totals ─────────────────────────────────────────────────────────────
+.totals-divider { margin: 20px 0 16px; }
+
+.totals-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.totals-row {
+  display: flex;
+  gap: 48px;
+  font-size: 13.5px;
+  color: var(--sage);
+
+  span:last-child {
+    min-width: 110px;
+    text-align: right;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+}
+
+.total-final {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
+  border-top: 2px solid var(--rule);
+  padding-top: 10px;
+  margin-top: 4px;
+
+  span:last-child {
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: var(--brand) !important;
+  }
+}
+
+// ── Actions ────────────────────────────────────────────────────────────
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+
+  .btn-spinner { display: inline-block; margin-right: 8px; vertical-align: middle; }
+}

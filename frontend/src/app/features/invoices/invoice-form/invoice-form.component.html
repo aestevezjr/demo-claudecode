@@ -1,0 +1,206 @@
+<div class="page-container">
+  <div class="page-header">
+    <button mat-icon-button (click)="cancel()" matTooltip="Volver">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div>
+      <h1 class="page-title">{{ isEditMode ? 'Editar Factura' : 'Nueva Factura' }}</h1>
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-container">
+      <mat-spinner diameter="48"></mat-spinner>
+    </div>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+
+        <!-- Invoice Info -->
+        <mat-card class="form-card">
+          <mat-card-header>
+            <mat-card-title>Información de la Factura</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="fields-row">
+              <div class="field-half autogen-number">
+                <mat-icon class="autogen-icon">tag</mat-icon>
+                <div>
+                  <p class="autogen-label">Número de Factura</p>
+                  <p class="autogen-value">
+                    {{ isEditMode ? invoiceNumber : 'Se generará automáticamente' }}
+                  </p>
+                </div>
+              </div>
+
+              <mat-form-field appearance="outline" class="field-half">
+                <mat-label>Fecha de Emisión</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="issueDate">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                @if (form.get('issueDate')?.invalid && form.get('issueDate')?.touched) {
+                  <mat-error>{{ getFieldError('issueDate') }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <div class="fields-row">
+              <mat-form-field appearance="outline" class="field-half">
+                <mat-label>Estado</mat-label>
+                <mat-select formControlName="status">
+                  @for (opt of statusOptions; track opt.value) {
+                    <mat-option [value]="opt.value">{{ opt.label }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="field-half">
+                <mat-label>Impuesto (%)</mat-label>
+                <input matInput type="number" formControlName="taxRate" min="0" max="100">
+                <span matTextSuffix>%</span>
+                @if (form.get('taxRate')?.invalid && form.get('taxRate')?.touched) {
+                  <mat-error>{{ getFieldError('taxRate') }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Client Info -->
+        <mat-card class="form-card">
+          <mat-card-header>
+            <mat-card-title>Datos del Cliente</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-form-field appearance="outline" class="field-full">
+              <mat-label>Nombre</mat-label>
+              <input matInput formControlName="clientName">
+              @if (form.get('clientName')?.invalid && form.get('clientName')?.touched) {
+                <mat-error>{{ getFieldError('clientName') }}</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="field-full">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="clientEmail" type="email">
+              @if (form.get('clientEmail')?.invalid && form.get('clientEmail')?.touched) {
+                <mat-error>{{ getFieldError('clientEmail') }}</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="field-full">
+              <mat-label>Dirección</mat-label>
+              <textarea matInput formControlName="clientAddress" rows="2"></textarea>
+              @if (form.get('clientAddress')?.invalid && form.get('clientAddress')?.touched) {
+                <mat-error>{{ getFieldError('clientAddress') }}</mat-error>
+              }
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+
+      <!-- Items -->
+      <mat-card class="form-card items-card">
+        <mat-card-header>
+          <mat-card-title>Líneas de Factura</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="items-header">
+            <span class="col-desc">Descripción</span>
+            <span class="col-qty">Cantidad</span>
+            <span class="col-price">Precio Unit.</span>
+            <span class="col-total">Total</span>
+            <span class="col-action"></span>
+          </div>
+
+          <div formArrayName="items">
+            @for (item of itemsArray.controls; track item; let i = $index) {
+              <div class="item-row" [formGroupName]="i">
+                <mat-form-field appearance="outline" class="col-desc">
+                  <input matInput formControlName="description" placeholder="Descripción del servicio o producto">
+                  @if (asFormGroup(item).get('description')?.invalid && asFormGroup(item).get('description')?.touched) {
+                    <mat-error>{{ getItemError(i, 'description') }}</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="col-qty">
+                  <input matInput type="number" formControlName="quantity" min="0.001" step="1">
+                  @if (asFormGroup(item).get('quantity')?.invalid && asFormGroup(item).get('quantity')?.touched) {
+                    <mat-error>{{ getItemError(i, 'quantity') }}</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="col-price">
+                  <span matTextPrefix>$&nbsp;</span>
+                  <input matInput type="number" formControlName="unitPrice" min="0" step="0.01">
+                  @if (asFormGroup(item).get('unitPrice')?.invalid && asFormGroup(item).get('unitPrice')?.touched) {
+                    <mat-error>{{ getItemError(i, 'unitPrice') }}</mat-error>
+                  }
+                </mat-form-field>
+
+                <div class="col-total line-total">
+                  {{ lineTotal(i) | currency:'USD':'symbol':'1.2-2' }}
+                </div>
+
+                <div class="col-action">
+                  <button type="button" mat-icon-button color="warn"
+                          (click)="removeItem(i)"
+                          [disabled]="itemsArray.length === 1"
+                          matTooltip="Eliminar línea">
+                    <mat-icon>remove_circle_outline</mat-icon>
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+
+          <button type="button" mat-stroked-button (click)="addItem()" class="add-item-btn">
+            <mat-icon>add</mat-icon>
+            Agregar línea
+          </button>
+
+          <mat-divider class="totals-divider"></mat-divider>
+
+          <div class="totals-section">
+            <div class="totals-row">
+              <span>Subtotal</span>
+              <span>{{ totals.subtotal | currency:'USD':'symbol':'1.2-2' }}</span>
+            </div>
+            <div class="totals-row">
+              <span>Impuesto ({{ form.get('taxRate')?.value || 0 }}%)</span>
+              <span>{{ totals.taxAmount | currency:'USD':'symbol':'1.2-2' }}</span>
+            </div>
+            <div class="totals-row total-final">
+              <span>Total</span>
+              <span>{{ totals.total | currency:'USD':'symbol':'1.2-2' }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Notes -->
+      <mat-card class="form-card">
+        <mat-card-content>
+          <mat-form-field appearance="outline" class="field-full">
+            <mat-label>Notas (opcional)</mat-label>
+            <textarea matInput formControlName="notes" rows="3" placeholder="Condiciones de pago, observaciones..."></textarea>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button type="button" mat-stroked-button (click)="cancel()">Cancelar</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="isSaving">
+          @if (isSaving) {
+            <mat-spinner diameter="20" class="btn-spinner"></mat-spinner>
+          } @else {
+            <mat-icon>save</mat-icon>
+          }
+          {{ isEditMode ? 'Guardar Cambios' : 'Crear Factura' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>

@@ -1,0 +1,114 @@
+@use '@angular/material' as mat;
+
+// ── Material Theme ─────────────────────────────────────────────────────
+@include mat.core();
+
+// Emerald green as primary — the ledger color
+$primary: mat.define-palette(mat.$green-palette, 800, 600, 900);
+// Amber accent — warm counterpoint to green
+$accent:  mat.define-palette(mat.$amber-palette, 700, 500, 900);
+$warn:    mat.define-palette(mat.$red-palette);
+
+$light-theme: mat.define-light-theme((
+  color: (primary: $primary, accent: $accent, warn: $warn),
+  typography: mat.define-typography-config(
+    $font-family: 'Inter, system-ui, sans-serif',
+  ),
+  density: 0,
+));
+
+$dark-theme: mat.define-dark-theme((
+  color: (primary: $primary, accent: $accent, warn: $warn),
+  typography: mat.define-typography-config(
+    $font-family: 'Inter, system-ui, sans-serif',
+  ),
+  density: 0,
+));
+
+@include mat.all-component-themes($light-theme);
+
+.dark-theme {
+  @include mat.all-component-colors($dark-theme);
+}
+
+// ── Design Tokens ──────────────────────────────────────────────────────
+:root {
+  --ink:     #0F1117;
+  --brand:   #1B4332;
+  --sage:    #52796F;
+  --paper:   #F8F6F1;
+  --rule:    #E2DDD5;
+  --amber:   #D97706;
+  --surface: #FFFFFF;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+  --radius:    6px;
+  --radius-lg: 10px;
+  --shadow-sm: 0 1px 3px rgba(15,17,23,0.08), 0 1px 2px rgba(15,17,23,0.04);
+  --shadow-md: 0 4px 12px rgba(15,17,23,0.10), 0 2px 4px rgba(15,17,23,0.06);
+}
+
+body.dark-theme {
+  --ink:     rgba(255,255,255,0.87);
+  --brand:   #52B788;
+  --sage:    #74C69D;
+  --paper:   #0D1410;
+  --rule:    #2D3A34;
+  --amber:   #FCD34D;
+  --surface: #1A2420;
+}
+
+// ── Base ───────────────────────────────────────────────────────────────
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+// ── Material overrides ─────────────────────────────────────────────────
+.mat-mdc-card {
+  box-shadow: var(--shadow-sm) !important;
+  border: 1px solid var(--rule) !important;
+  background: var(--surface) !important;
+  border-radius: var(--radius-lg) !important;
+}
+
+.mat-mdc-row { transition: background 0.12s ease; }
+
+.mat-mdc-snack-bar-container { margin-bottom: 16px !important; }
+
+// Raised button — override Material green 800 with brand
+.mat-mdc-raised-button.mat-primary {
+  --mdc-protected-button-container-color: var(--brand);
+  --mdc-protected-button-label-text-color: #fff;
+}
+
+// ── Dark theme text overrides ──────────────────────────────────────────
+body.dark-theme {
+  .app-content { background: var(--paper); }
+  .mat-mdc-card { border-color: var(--rule) !important; background: var(--surface) !important; }
+  .page-title   { color: rgba(255,255,255,0.87) !important; }
+  .page-subtitle, .info-label { color: rgba(255,255,255,0.5) !important; }
+  .client-name  { color: rgba(255,255,255,0.87) !important; }
+  .client-detail, .info-value { color: rgba(255,255,255,0.65) !important; }
+  .notes-text   { color: rgba(255,255,255,0.45) !important; }
+  .empty-state h3 { color: rgba(255,255,255,0.87) !important; }
+  .empty-state p  { color: rgba(255,255,255,0.55) !important; }
+  .empty-icon   { color: rgba(255,255,255,0.15) !important; }
+  .total-cell, .total-final, .line-total { color: var(--brand) !important; }
+  .brand-name, .invoice-number, .toolbar-title { color: #fff !important; }
+  .totals-row   { color: rgba(255,255,255,0.65) !important; }
+  .items-header { background: rgba(255,255,255,0.04) !important; color: rgba(255,255,255,0.4) !important; }
+  .invoice-footer { color: rgba(255,255,255,0.25) !important; border-top-color: var(--rule) !important; }
+  .autogen-number { border-color: var(--rule) !important; background: rgba(255,255,255,0.03) !important; }
+  .autogen-label  { color: rgba(255,255,255,0.4) !important; }
+  .autogen-value  { color: rgba(255,255,255,0.75) !important; }
+  .mat-mdc-row:hover { background: rgba(255,255,255,0.04) !important; }
+  .invoice-row-inner { border-bottom-color: var(--rule) !important; }
+  .list-inv-number { color: var(--brand) !important; }
+  .list-amount { color: var(--brand) !important; }
+}

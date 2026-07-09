@@ -1,0 +1,41 @@
+<mat-toolbar class="app-toolbar">
+  <a class="toolbar-brand" routerLink="/invoices">
+    <mat-icon class="toolbar-logo">receipt_long</mat-icon>
+    <span class="toolbar-title">FacturasApp</span>
+  </a>
+  <span class="toolbar-spacer"></span>
+
+  @if (auth.isAuthenticated()) {
+    <button mat-button class="nav-link" routerLink="/invoices">
+      <mat-icon>list</mat-icon>
+      Facturas
+    </button>
+    <button mat-icon-button class="theme-btn"
+            (click)="theme.toggle()"
+            [matTooltip]="theme.isDark ? 'Tema claro' : 'Tema oscuro'">
+      <mat-icon>{{ theme.isDark ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+    <span class="toolbar-user" [matTooltip]="'Conectado como ' + auth.username()">
+      <mat-icon>account_circle</mat-icon>
+      {{ auth.username() }}
+    </span>
+    <button mat-button class="nav-link logout-btn" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Salir
+    </button>
+    <button mat-raised-button class="new-btn" routerLink="/invoices/new">
+      <mat-icon>add</mat-icon>
+      Nueva
+    </button>
+  } @else {
+    <button mat-icon-button class="theme-btn"
+            (click)="theme.toggle()"
+            [matTooltip]="theme.isDark ? 'Tema claro' : 'Tema oscuro'">
+      <mat-icon>{{ theme.isDark ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+  }
+</mat-toolbar>
+
+<main class="app-content">
+  <router-outlet></router-outlet>
+</main>
