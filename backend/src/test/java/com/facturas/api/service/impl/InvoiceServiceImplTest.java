@@ -488,7 +488,7 @@ class InvoiceServiceImplTest {
         when(invoiceRepository.findAllByOrderByIssueDateDesc(pageable))
                 .thenReturn(new PageImpl<>(List.of(inv1, inv2), pageable, 2));
 
-        Page<InvoiceResponseDTO> result = invoiceService.getAllInvoices(pageable);
+        Page<InvoiceResponseDTO> result = invoiceService.getAllInvoices(pageable, null);
 
         assertThat(result.getContent()).hasSize(2);
         assertThat(result.getContent().get(0).getInvoiceNumber()).isEqualTo("FAC-2026-0001");
@@ -501,7 +501,7 @@ class InvoiceServiceImplTest {
         when(invoiceRepository.findAllByOrderByIssueDateDesc(pageable))
                 .thenReturn(new PageImpl<>(List.of(), pageable, 0));
 
-        Page<InvoiceResponseDTO> result = invoiceService.getAllInvoices(pageable);
+        Page<InvoiceResponseDTO> result = invoiceService.getAllInvoices(pageable, null);
 
         assertThat(result.getContent()).isNotNull().isEmpty();
         assertThat(result.getTotalElements()).isEqualTo(0);

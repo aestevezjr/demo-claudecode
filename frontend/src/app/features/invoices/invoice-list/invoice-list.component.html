@@ -10,6 +10,20 @@
     </button>
   </div>
 
+  <div class="search-bar">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput placeholder="Buscar por cliente o ítem..."
+             [value]="searchTerm()"
+             (input)="onSearch($any($event.target).value)">
+      @if (searchTerm()) {
+        <button matSuffix mat-icon-button (click)="onSearch('')" matTooltip="Limpiar búsqueda">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+  </div>
+
   <mat-card class="table-card">
     @if (isLoading()) {
       <div class="loading-container">
@@ -17,13 +31,23 @@
       </div>
     } @else if (invoices().length === 0) {
       <div class="empty-state">
-        <mat-icon class="empty-icon">receipt_long</mat-icon>
-        <h3>Sin facturas aún</h3>
-        <p>Crea tu primer documento de cobro</p>
-        <button mat-raised-button color="primary" routerLink="/invoices/new">
-          <mat-icon>add</mat-icon>
-          Nueva Factura
-        </button>
+        @if (searchTerm()) {
+          <mat-icon class="empty-icon">search_off</mat-icon>
+          <h3>Sin resultados</h3>
+          <p>No hay facturas que coincidan con <strong>"{{ searchTerm() }}"</strong></p>
+          <button mat-stroked-button (click)="onSearch('')">
+            <mat-icon>close</mat-icon>
+            Limpiar búsqueda
+          </button>
+        } @else {
+          <mat-icon class="empty-icon">receipt_long</mat-icon>
+          <h3>Sin facturas aún</h3>
+          <p>Crea tu primer documento de cobro</p>
+          <button mat-raised-button color="primary" routerLink="/invoices/new">
+            <mat-icon>add</mat-icon>
+            Nueva Factura
+          </button>
+        }
       </div>
     } @else {
       <div class="list-header">

@@ -24,8 +24,9 @@ public class InvoiceController {
     @GetMapping
     public ResponseEntity<Page<InvoiceResponseDTO>> getAll(
             @PageableDefault(size = 50, sort = "issueDate", direction = Sort.Direction.DESC)
-            Pageable pageable) {
-        return ResponseEntity.ok(invoiceService.getAllInvoices(pageable));
+            Pageable pageable,
+            @RequestParam(required = false) String search) {
+        return ResponseEntity.ok(invoiceService.getAllInvoices(pageable, search));
     }
 
     @GetMapping("/{id}")

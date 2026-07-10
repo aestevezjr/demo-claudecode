@@ -31,6 +31,7 @@ export class InvoiceFacade {
   private readonly _pageSize      = signal(5);
   private readonly _totalElements = signal(0);
   private readonly _totalPages    = signal(0);
+  private readonly _searchTerm    = signal('');
 
   /** Lista de facturas de la página actual (solo lectura desde los componentes). */
   readonly invoices      = this._invoices.asReadonly();
@@ -42,6 +43,7 @@ export class InvoiceFacade {
   readonly pageSize      = this._pageSize.asReadonly();
   readonly totalElements = this._totalElements.asReadonly();
   readonly totalPages    = this._totalPages.asReadonly();
+  readonly searchTerm    = this._searchTerm.asReadonly();
 
   /** Numero total de facturas en el servidor. */
   readonly invoiceCount = computed(() => this._totalElements());
@@ -53,7 +55,7 @@ export class InvoiceFacade {
     this._isLoading.set(true);
     this._currentPage.set(page);
     this._pageSize.set(size);
-    this.invoiceService.getPage(page, size).subscribe({
+    this.invoiceService.getPage(page, size, this._searchTerm()).subscribe({
       next: (data: PageResponse<Invoice>) => {
         this._invoices.set(data.content);
         this._totalElements.set(data.totalElements);
@@ -65,6 +67,12 @@ export class InvoiceFacade {
         this._isLoading.set(false);
       },
     });
+  }
+
+  /** Aplica un término de búsqueda y recarga desde la primera página. */
+  search(term: string): void {
+    this._searchTerm.set(term);
+    this.loadPage(0, this._pageSize());
   }
 
   /**

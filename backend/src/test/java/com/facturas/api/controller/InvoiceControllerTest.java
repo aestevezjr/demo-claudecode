@@ -31,6 +31,7 @@ import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -121,7 +122,7 @@ class InvoiceControllerTest {
 
     @Test
     void getAll_returns200WithInvoicePage() throws Exception {
-        when(invoiceService.getAllInvoices(any(Pageable.class))).thenReturn(samplePage());
+        when(invoiceService.getAllInvoices(any(Pageable.class), isNull())).thenReturn(samplePage());
 
         mockMvc.perform(get(BASE_URL))
                 .andExpect(status().isOk())
@@ -131,7 +132,7 @@ class InvoiceControllerTest {
 
     @Test
     void getAll_emptyList_returns200WithEmptyContent() throws Exception {
-        when(invoiceService.getAllInvoices(any(Pageable.class)))
+        when(invoiceService.getAllInvoices(any(Pageable.class), isNull()))
                 .thenReturn(new PageImpl<>(List.of()));
 
         mockMvc.perform(get(BASE_URL))

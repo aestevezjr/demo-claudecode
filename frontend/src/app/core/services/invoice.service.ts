@@ -9,8 +9,10 @@ export class InvoiceService {
 
   constructor(private http: HttpClient) {}
 
-  getPage(page: number, size: number): Observable<PageResponse<Invoice>> {
-    return this.http.get<PageResponse<Invoice>>(`${this.API_URL}?page=${page}&size=${size}`);
+  getPage(page: number, size: number, search?: string): Observable<PageResponse<Invoice>> {
+    let url = `${this.API_URL}?page=${page}&size=${size}`;
+    if (search?.trim()) url += `&search=${encodeURIComponent(search.trim())}`;
+    return this.http.get<PageResponse<Invoice>>(url);
   }
 
   getById(id: number): Observable<Invoice> {
