@@ -1,0 +1,159 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - link "FacturasApp" [ref=e4] [cursor=pointer]:
+      - /url: /invoices
+      - img [ref=e5]: receipt_long
+    - button "Facturas" [ref=e50]:
+      - img [ref=e51]: list
+    - button [ref=e55] [cursor=pointer]:
+      - img [ref=e56]: dark_mode
+    - generic [ref=e59]:
+      - img [ref=e60]: account_circle
+      - text: qatester
+    - button "Salir" [ref=e61]:
+      - img [ref=e62]: logout
+    - button "Nueva" [ref=e66]:
+      - img [ref=e67]: add
+  - main [ref=e11]:
+    - generic [ref=e72]:
+      - generic [ref=e73]:
+        - generic [ref=e74]:
+          - button [ref=e75] [cursor=pointer]:
+            - img [ref=e76]: filter_list_off
+          - generic [ref=e79]:
+            - heading "Facturas" [level=1] [ref=e80]
+            - paragraph [ref=e81]: Gestiona todos tus documentos de cobro
+        - button "Nueva Factura" [ref=e82]:
+          - img [ref=e83]: add
+      - generic [ref=e87]:
+        - complementary [ref=e88]:
+          - generic [ref=e89]:
+            - generic [ref=e90]: Filtros
+            - generic [ref=e92]:
+              - paragraph [ref=e93]: Estado
+              - radiogroup [ref=e94]:
+                - generic [ref=e96]:
+                  - radio "Todos" [checked] [ref=e99] [cursor=pointer]
+                  - generic [ref=e103]: Todos
+                - generic [ref=e105]:
+                  - radio "Pendiente" [ref=e108] [cursor=pointer]
+                  - generic [ref=e111]: Pendiente
+                - generic [ref=e113]:
+                  - radio "Pagada" [ref=e116] [cursor=pointer]
+                  - generic [ref=e119]: Pagada
+                - generic [ref=e121]:
+                  - radio "Cancelada" [ref=e124] [cursor=pointer]
+                  - generic [ref=e127]: Cancelada
+            - separator [ref=e128]
+            - generic [ref=e129]:
+              - paragraph [ref=e130]: Fecha de emisión
+              - generic [ref=e133]:
+                - generic: Desde
+                - textbox "Desde" [ref=e136]
+                - button "Open calendar" [ref=e139] [cursor=pointer]
+              - generic [ref=e146]:
+                - generic: Hasta
+                - textbox "Hasta" [ref=e149]
+                - button "Open calendar" [ref=e152] [cursor=pointer]
+            - separator [ref=e157]
+            - generic [ref=e158]:
+              - paragraph [ref=e159]: Monto total (USD)
+              - generic [ref=e162]:
+                - generic: Mínimo
+                - spinbutton "Mínimo" [ref=e165]
+              - generic [ref=e168]:
+                - generic: Máximo
+                - spinbutton "Máximo" [ref=e171]
+        - generic [ref=e173]:
+          - generic [ref=e174]:
+            - img [ref=e175]: search
+            - textbox "Buscar por cliente o ítem..." [ref=e176]
+          - generic [ref=e350]:
+            - generic [ref=e351]: Número
+            - generic [ref=e352]: Fecha
+            - generic [ref=e353]: Cliente
+            - generic [ref=e354]: Estado
+            - generic [ref=e355]: Total
+          - generic [ref=e357] [cursor=pointer]:
+            - generic [ref=e358]: FAC-2026-0005
+            - generic [ref=e359]: 29/06/2026
+            - generic [ref=e360]: Davivienda S.A.
+            - generic [ref=e361]: Pendiente
+            - generic [ref=e365]: $39,270.00
+            - generic [ref=e366]:
+              - button [ref=e367]:
+                - img [ref=e368]: visibility
+              - button [ref=e371]:
+                - img [ref=e372]: edit
+              - button [ref=e375]:
+                - img [ref=e376]: delete_outline
+          - generic [ref=e379] [cursor=pointer]:
+            - generic [ref=e380]: FAC-2026-0004
+            - generic [ref=e381]: 10/05/2026
+            - generic [ref=e382]: Mineros S.A.
+            - generic [ref=e383]: Pendiente
+            - generic [ref=e387]: $8,687.00
+            - generic [ref=e388]:
+              - button [ref=e389]:
+                - img [ref=e390]: visibility
+              - button [ref=e393]:
+                - img [ref=e394]: edit
+              - button [ref=e397]:
+                - img [ref=e398]: delete_outline
+          - generic [ref=e401] [cursor=pointer]:
+            - generic [ref=e402]: FAC-2026-0003
+            - generic [ref=e403]: 22/03/2026
+            - generic [ref=e404]: Fundación Santa Fe
+            - generic [ref=e405]: Pagada
+            - generic [ref=e409]: $17,400.00
+            - generic [ref=e410]:
+              - button [ref=e411]:
+                - img [ref=e412]: visibility
+              - button [ref=e415]:
+                - img [ref=e416]: edit
+              - button [ref=e419]:
+                - img [ref=e420]: delete_outline
+          - generic [ref=e423] [cursor=pointer]:
+            - generic [ref=e424]: FAC-2026-0002
+            - generic [ref=e425]: 14/02/2026
+            - generic [ref=e426]: Postobón S.A.
+            - generic [ref=e427]: Pendiente
+            - generic [ref=e431]: $4,284.00
+            - generic [ref=e432]:
+              - button [ref=e433]:
+                - img [ref=e434]: visibility
+              - button [ref=e437]:
+                - img [ref=e438]: edit
+              - button [ref=e441]:
+                - img [ref=e442]: delete_outline
+          - generic [ref=e445] [cursor=pointer]:
+            - generic [ref=e446]: FAC-2026-0001
+            - generic [ref=e447]: 08/01/2026
+            - generic [ref=e448]: Rappi Colombia
+            - generic [ref=e449]: Pagada
+            - generic [ref=e453]: $11,900.00
+            - generic [ref=e454]:
+              - button [ref=e455]:
+                - img [ref=e456]: visibility
+              - button [ref=e459]:
+                - img [ref=e460]: edit
+              - button [ref=e463]:
+                - img [ref=e464]: delete_outline
+          - generic [ref=e468]:
+            - generic [ref=e469]: Mostrando 1–5 de 30
+            - navigation "Paginación" [ref=e470]:
+              - button "Primera página" [disabled]: Primera
+              - button "Anterior" [disabled]: ‹
+              - button "1" [ref=e471] [cursor=pointer]
+              - button "2" [ref=e472] [cursor=pointer]
+              - button "3" [ref=e473] [cursor=pointer]
+              - button "4" [ref=e474] [cursor=pointer]
+              - button "5" [ref=e475] [cursor=pointer]
+              - button "Siguiente" [ref=e476] [cursor=pointer]: ›
+              - button "Última página" [ref=e477] [cursor=pointer]: Última
+            - generic [ref=e478]:
+              - generic [ref=e479]: Por página
+              - combobox "Por página" [ref=e480] [cursor=pointer]:
+                - option "5" [selected]
+                - option "10"
+                - option "15"

@@ -1,11 +1,9 @@
 -- ============================================================
--- Seed Data — 30 facturas de prueba
+-- Seed Data — 30 facturas de prueba (PostgreSQL / Supabase)
 -- ============================================================
 
-USE facturas_db;
-
 -- ─── FACTURAS ────────────────────────────────────────────────
-INSERT IGNORE INTO invoices
+INSERT INTO invoices
   (id, invoice_number, issue_date, status, client_name, client_email, client_address,
    subtotal, tax_rate, tax_amount, total, notes, created_at, updated_at)
 VALUES
@@ -43,10 +41,14 @@ VALUES
 (27, 'FAC-2026-0002', '2026-02-14', 'PENDING',   'Postobón S.A.',               'postobon@postobon.co',          'Cra 63A #14-30, Bogotá',              3600.00, 19.00,  684.00,  4284.00, 'Renovación de imagen corporativa.',               '2026-02-14 10:00:00', '2026-02-14 10:00:00'),
 (28, 'FAC-2026-0003', '2026-03-22', 'PAID',      'Fundación Santa Fe',          'fsantafe@fsantafe.org',         'Cl. 116 #9-02, Bogotá',              17400.00,  0.00,    0.00, 17400.00, 'Exento de IVA — entidad sin ánimo de lucro.',    '2026-03-22 08:00:00', '2026-04-10 09:00:00'),
 (29, 'FAC-2026-0004', '2026-05-10', 'PENDING',   'Mineros S.A.',                'mineros@mineros.com.co',        'Cl. 7 #43B-79, Medellín',             7300.00, 19.00, 1387.00,  8687.00, NULL,                                              '2026-05-10 09:00:00', '2026-05-10 09:00:00'),
-(30, 'FAC-2026-0005', '2026-06-30', 'PENDING',   'Davivienda S.A.',             'davivienda@davivienda.com',     'Cl. 29 #7-18, Bogotá',               33000.00, 19.00, 6270.00, 39270.00, 'Contrato anual de ciberseguridad.',               '2026-06-30 09:00:00', '2026-06-30 09:00:00');
+(30, 'FAC-2026-0005', '2026-06-30', 'PENDING',   'Davivienda S.A.',             'davivienda@davivienda.com',     'Cl. 29 #7-18, Bogotá',               33000.00, 19.00, 6270.00, 39270.00, 'Contrato anual de ciberseguridad.',               '2026-06-30 09:00:00', '2026-06-30 09:00:00')
+ON CONFLICT (id) DO NOTHING;
+
+-- Reset sequence so future inserts don't collide with seeded IDs
+SELECT setval('invoices_id_seq', (SELECT MAX(id) FROM invoices));
 
 -- ─── ITEMS ───────────────────────────────────────────────────
-INSERT IGNORE INTO invoice_items (invoice_id, description, quantity, unit_price, line_total, sort_order) VALUES
+INSERT INTO invoice_items (invoice_id, description, quantity, unit_price, line_total, sort_order) VALUES
 -- FAC-2024-0001
 (1,  'Desarrollo web',                           1.000,   2500.00,  2500.00, 0),
 (1,  'Diseño UI/UX',                             1.000,    800.00,   800.00, 1),
@@ -140,9 +142,13 @@ INSERT IGNORE INTO invoice_items (invoice_id, description, quantity, unit_price,
 -- FAC-2026-0005
 (30, 'Consultoría en ciberseguridad',            1.000,  20000.00, 20000.00, 0),
 (30, 'Implementación de políticas de seguridad', 1.000,   5000.00,  5000.00, 1),
-(30, 'Pruebas de penetración (pentest)',          1.000,   8000.00,  8000.00, 2);
+(30, 'Pruebas de penetración (pentest)',          1.000,   8000.00,  8000.00, 2)
+ON CONFLICT DO NOTHING;
+
+-- Reset sequence for invoice_items
+SELECT setval('invoice_items_id_seq', (SELECT MAX(id) FROM invoice_items));
 
 -- ─── SECUENCIAS ──────────────────────────────────────────────
 INSERT INTO invoice_sequences (invoice_year, last_seq)
 VALUES (2024, 10), (2025, 15), (2026, 5)
-ON DUPLICATE KEY UPDATE last_seq = VALUES(last_seq);
+ON CONFLICT (invoice_year) DO NOTHING;

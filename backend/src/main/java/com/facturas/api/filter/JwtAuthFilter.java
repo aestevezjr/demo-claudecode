@@ -1,5 +1,6 @@
 package com.facturas.api.filter;
 
+import com.facturas.api.entity.User;
 import com.facturas.api.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -28,10 +30,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final SecurityContextRepository securityContextRepository;
 
-    public JwtAuthFilter(JwtService jwtService, UserDetailsService userDetailsService) {
+    public JwtAuthFilter(JwtService jwtService, UserDetailsService userDetailsService,
+                          SecurityContextRepository securityContextRepository) {
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
+        this.securityContextRepository = securityContextRepository;
     }
 
     @Override
@@ -49,10 +54,28 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             String username = jwtService.extractUsername(token);
             try {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(auth);
+                Integer tokenVersion = jwtService.extractTokenVersion(token);
+                int currentVersion = (userDetails instanceof User u) ? u.getTokenVersion() : -1;
+
+                // tokenVersion mismatch (or missing "tv" claim) means the token was
+                // revoked via logout, or issued before revocation existed — reject it.
+                if (tokenVersion != null && tokenVersion == currentVersion) {
+                    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities());
+                    auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(auth);
+                    /*
+                     * Explicitly record that this request's SecurityContext is already established.
+                     * Without this, SessionManagementFilter (further down the chain) sees
+                     * securityContextRepository.containsContext(request) == false on every single
+                     * request — since STATELESS apps never persist anything across requests — and
+                     * treats each request as a brand-new login, triggering CsrfAuthenticationStrategy
+                     * to rotate (delete) the XSRF-TOKEN cookie. Saving here marks the context as
+                     * already present for THIS request, so that check passes and the CSRF cookie
+                     * is left alone on requests after the first one.
+                     */
+                    securityContextRepository.saveContext(SecurityContextHolder.getContext(), request, response);
+                }
             } catch (UsernameNotFoundException ignored) {
                 // User deleted after token was issued — leave SecurityContext empty → 401
             }

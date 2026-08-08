@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, switchMap, tap, map, catchError } from 'rxjs';
+import { Observable, of, switchMap, tap, map, catchError, shareReplay } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 interface MeResponse {
   username: string;
@@ -8,7 +9,7 @@ interface MeResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly AUTH_URL = 'http://localhost:8080/auth';
+  private readonly AUTH_URL = `${environment.apiBaseUrl}/auth`;
 
   /**
    * Internal writable signals — the JWT is stored in an HttpOnly cookie that JavaScript
@@ -20,11 +21,30 @@ export class AuthService {
   readonly isAuthenticated = this._isAuthenticated.asReadonly();
   readonly username = this._username.asReadonly();
 
+  /**
+   * Resolves once the initial /auth/me check (below) completes. Guards must wait on this
+   * before reading the isAuthenticated signal — otherwise, on a hard page reload, the guard
+   * runs synchronously while the signal still holds its initial `false` value and the async
+   * /auth/me call hasn't returned yet, incorrectly bouncing an already-logged-in user to /login.
+   */
+  readonly ready$: Observable<void>;
+
   constructor(private http: HttpClient) {
     // Restore auth state from the HttpOnly cookie when the page is refreshed.
     // The /auth/me request goes through authInterceptor which adds withCredentials: true,
     // so the browser automatically attaches the jwt cookie.
-    this.checkAuth().subscribe();
+    //
+    // The actual HTTP call is deferred (queueMicrotask) rather than fired directly here:
+    // authInterceptor calls inject(AuthService), and firing the request synchronously from
+    // within this constructor means that inject() call happens *while this very instance is
+    // still being constructed* — Angular's DI sees that as a circular dependency (NG0200) and
+    // throws, which checkAuth()'s catchError swallows into "not authenticated". In practice
+    // that made every hard page reload look logged-out even with a valid session cookie.
+    // Deferring one microtask lets the constructor (and DI's bookkeeping for this instance)
+    // finish first, so by the time the request — and the interceptor's inject(AuthService) —
+    // actually runs, the singleton is fully constructed and resolves normally.
+    this.ready$ = this.checkAuth().pipe(shareReplay(1));
+    queueMicrotask(() => this.ready$.subscribe());
   }
 
   /**

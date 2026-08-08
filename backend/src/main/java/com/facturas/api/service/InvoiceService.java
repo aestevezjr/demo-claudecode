@@ -6,9 +6,14 @@ import com.facturas.api.enums.InvoiceStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 public interface InvoiceService {
 
-    Page<InvoiceResponseDTO> getAllInvoices(Pageable pageable, String search);
+    Page<InvoiceResponseDTO> getAllInvoices(Pageable pageable, String search,
+            InvoiceStatus status, LocalDate dateFrom, LocalDate dateTo,
+            BigDecimal minAmount, BigDecimal maxAmount);
 
     InvoiceResponseDTO getInvoiceById(Long id);
 

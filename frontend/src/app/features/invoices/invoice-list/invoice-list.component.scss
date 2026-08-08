@@ -1,38 +1,206 @@
 .page-container {
-  max-width: 1100px;
+  max-width: 1340px;
   margin: 0 auto;
   padding: 32px 20px;
 }
 
-.search-bar {
-  margin-bottom: 16px;
-}
-
-.search-field {
-  width: 100%;
-  max-width: 440px;
-}
-
+// ── Page header ────────────────────────────────────────────────────────
 .page-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
+}
 
-  .page-title {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--ink);
-    letter-spacing: -0.3px;
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.page-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.3px;
+}
+
+.page-subtitle {
+  margin: 5px 0 0;
+  color: var(--sage);
+  font-size: 13.5px;
+  font-weight: 400;
+}
+
+.sidebar-toggle {
+  position: relative;
+  color: var(--sage) !important;
+  margin-right: 4px;
+  flex-shrink: 0;
+
+  &:hover { color: var(--brand) !important; }
+}
+
+.filter-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: var(--brand);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+// ── Two-column layout ──────────────────────────────────────────────────
+.content-layout {
+  display: grid;
+  grid-template-columns: 244px 1fr;
+  gap: 20px;
+  align-items: start;
+  transition: grid-template-columns 0.25s ease;
+
+  &.sidebar-closed {
+    grid-template-columns: 0 1fr;
+    gap: 0;
+
+    .filter-sidebar {
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+}
+
+// ── Filter sidebar ─────────────────────────────────────────────────────
+.filter-sidebar {
+  min-width: 0;
+  transition: opacity 0.2s ease;
+}
+
+.sidebar-inner {
+  box-sizing: border-box;
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.sidebar-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.sidebar-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.clear-btn {
+  font-size: 12px !important;
+  min-width: 0 !important;
+  padding: 0 8px !important;
+  height: 28px !important;
+  line-height: 28px !important;
+}
+
+.filter-section {
+  padding: 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-label {
+  margin: 0 0 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: var(--sage);
+}
+
+.filter-field {
+  width: 100%;
+
+  // Compact field for sidebar
+  ::ng-deep .mat-mdc-form-field-subscript-wrapper { display: none; }
+}
+
+// Status radio buttons
+.status-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.status-radio {
+  font-size: 13.5px !important;
+
+  ::ng-deep .mdc-form-field > label { font-size: 13.5px; color: var(--ink); }
+}
+
+.status-rb-pending   ::ng-deep .mdc-radio__outer-circle,
+.status-rb-pending   ::ng-deep .mdc-radio__inner-circle { border-color: #D97706 !important; }
+
+.status-rb-paid      ::ng-deep .mdc-radio__outer-circle,
+.status-rb-paid      ::ng-deep .mdc-radio__inner-circle { border-color: #059669 !important; }
+
+.status-rb-cancelled ::ng-deep .mdc-radio__outer-circle,
+.status-rb-cancelled ::ng-deep .mdc-radio__inner-circle { border-color: #9CA3AF !important; }
+
+// ── Main content ───────────────────────────────────────────────────────
+.main-content {
+  min-width: 0;
+}
+
+// ── Integrated search bar (inside table-card) ──────────────────────────
+.list-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--surface);
+
+  .search-icon {
+    color: var(--sage);
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
   }
 
-  .page-subtitle {
-    margin: 5px 0 0;
-    color: var(--sage);
+  .search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: var(--font-body);
     font-size: 13.5px;
-    font-weight: 400;
+    color: var(--ink);
+    &::placeholder { color: var(--sage); }
+  }
+
+  .search-clear {
+    width: 28px !important;
+    height: 28px !important;
+    line-height: 28px !important;
+    color: var(--sage) !important;
+    flex-shrink: 0;
+
+    mat-icon { font-size: 16px; width: 16px; height: 16px; }
   }
 }
 
@@ -40,7 +208,6 @@
   padding: 0 !important;
   overflow: hidden;
 
-  // Remove default mat-card padding
   ::ng-deep .mat-mdc-card-content { padding: 0 !important; }
 }
 
@@ -60,7 +227,6 @@
 }
 
 // ── Invoice row ────────────────────────────────────────────────────────
-// Signature element: colored left accent bar per status
 .invoice-row {
   display: grid;
   grid-template-columns: 160px 110px 1fr 140px 130px 120px;
@@ -79,9 +245,8 @@
     border-left-color: var(--brand);
   }
 
-  // Status-specific left border color
-  &.status-pending  { border-left-color: #D97706; }
-  &.status-paid     { border-left-color: #059669; }
+  &.status-pending   { border-left-color: #D97706; }
+  &.status-paid      { border-left-color: #059669; }
   &.status-cancelled { border-left-color: #9CA3AF; }
 }
 
@@ -171,6 +336,20 @@
 }
 
 // ── Responsive ─────────────────────────────────────────────────────────
+@media (max-width: 900px) {
+  .content-layout,
+  .content-layout.sidebar-closed {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-sidebar {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+}
+
+
 @media (max-width: 768px) {
   .list-header,
   .invoice-row {

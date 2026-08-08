@@ -1,0 +1,25 @@
+- generic [ref=f3e2]:
+  - generic [ref=f3e3]:
+    - link "FacturasApp" [ref=f3e4] [cursor=pointer]:
+      - /url: /invoices
+      - img [ref=f3e5]: receipt_long
+    - button [ref=f3e7] [cursor=pointer]:
+      - img [ref=f3e8]: dark_mode
+  - main [ref=f3e11]:
+    - generic [ref=f3e14]:
+      - generic [ref=f3e16]:
+        - generic [ref=f3e17]: FacturasApp
+        - generic [ref=f3e18]: Iniciar sesión
+      - generic [ref=f3e20]:
+        - generic [ref=f3e23]:
+          - generic [ref=f3e24]:
+            - text: Usuario
+            - generic [ref=f3e25]: "*"
+          - textbox "Usuario" [ref=f3e27]
+        - generic [ref=f3e31]:
+          - generic [ref=f3e32]:
+            - text: Contraseña
+            - generic [ref=f3e33]: "*"
+          - textbox "Contraseña" [ref=f3e35]
+        - button "Entrar" [disabled]
+      - button "¿No tienes cuenta? Regístrate" [ref=f3e38]

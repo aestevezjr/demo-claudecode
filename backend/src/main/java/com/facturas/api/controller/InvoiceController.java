@@ -10,9 +10,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/v1/invoices")
@@ -25,8 +29,14 @@ public class InvoiceController {
     public ResponseEntity<Page<InvoiceResponseDTO>> getAll(
             @PageableDefault(size = 50, sort = "issueDate", direction = Sort.Direction.DESC)
             Pageable pageable,
-            @RequestParam(required = false) String search) {
-        return ResponseEntity.ok(invoiceService.getAllInvoices(pageable, search));
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) InvoiceStatus status,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
+            @RequestParam(required = false) BigDecimal minAmount,
+            @RequestParam(required = false) BigDecimal maxAmount) {
+        return ResponseEntity.ok(invoiceService.getAllInvoices(
+                pageable, search, status, dateFrom, dateTo, minAmount, maxAmount));
     }
 
     @GetMapping("/{id}")

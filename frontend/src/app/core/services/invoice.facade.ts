@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { InvoiceService } from './invoice.service';
+import { InvoiceService, InvoiceFilters } from './invoice.service';
 import { Invoice, InvoiceStatus, PageResponse } from '../models/invoice.model';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 
@@ -32,21 +32,36 @@ export class InvoiceFacade {
   private readonly _totalElements = signal(0);
   private readonly _totalPages    = signal(0);
   private readonly _searchTerm    = signal('');
+  private readonly _statusFilter  = signal<InvoiceStatus | null>(null);
+  private readonly _dateFrom      = signal<string | null>(null);
+  private readonly _dateTo        = signal<string | null>(null);
+  private readonly _minAmount     = signal<number | null>(null);
+  private readonly _maxAmount     = signal<number | null>(null);
 
-  /** Lista de facturas de la página actual (solo lectura desde los componentes). */
   readonly invoices      = this._invoices.asReadonly();
-
-  /** Indica si hay una operacion de carga en curso. */
   readonly isLoading     = this._isLoading.asReadonly();
-
   readonly currentPage   = this._currentPage.asReadonly();
   readonly pageSize      = this._pageSize.asReadonly();
   readonly totalElements = this._totalElements.asReadonly();
   readonly totalPages    = this._totalPages.asReadonly();
   readonly searchTerm    = this._searchTerm.asReadonly();
+  readonly statusFilter  = this._statusFilter.asReadonly();
+  readonly dateFrom      = this._dateFrom.asReadonly();
+  readonly dateTo        = this._dateTo.asReadonly();
+  readonly minAmount     = this._minAmount.asReadonly();
+  readonly maxAmount     = this._maxAmount.asReadonly();
 
   /** Numero total de facturas en el servidor. */
   readonly invoiceCount = computed(() => this._totalElements());
+
+  /** Número de filtros del sidebar activos (excluye búsqueda de texto). */
+  readonly activeFilterCount = computed(() =>
+    (this._statusFilter() !== null ? 1 : 0)
+    + (this._dateFrom() ? 1 : 0)
+    + (this._dateTo() ? 1 : 0)
+    + (this._minAmount() != null ? 1 : 0)
+    + (this._maxAmount() != null ? 1 : 0)
+  );
 
   // --- Operaciones de lectura ---
 
@@ -55,7 +70,15 @@ export class InvoiceFacade {
     this._isLoading.set(true);
     this._currentPage.set(page);
     this._pageSize.set(size);
-    this.invoiceService.getPage(page, size, this._searchTerm()).subscribe({
+    const filters: InvoiceFilters = {
+      search:    this._searchTerm() || undefined,
+      status:    this._statusFilter() ?? undefined,
+      dateFrom:  this._dateFrom() ?? undefined,
+      dateTo:    this._dateTo() ?? undefined,
+      minAmount: this._minAmount() ?? undefined,
+      maxAmount: this._maxAmount() ?? undefined,
+    };
+    this.invoiceService.getPage(page, size, filters).subscribe({
       next: (data: PageResponse<Invoice>) => {
         this._invoices.set(data.content);
         this._totalElements.set(data.totalElements);
@@ -72,6 +95,37 @@ export class InvoiceFacade {
   /** Aplica un término de búsqueda y recarga desde la primera página. */
   search(term: string): void {
     this._searchTerm.set(term);
+    this.loadPage(0, this._pageSize());
+  }
+
+  /** Filtra por estado (null = sin filtro). */
+  setStatus(status: InvoiceStatus | null): void {
+    this._statusFilter.set(status);
+    this.loadPage(0, this._pageSize());
+  }
+
+  /** Filtra por rango de fecha de emisión (formato ISO YYYY-MM-DD). */
+  setDateRange(from: string | null, to: string | null): void {
+    this._dateFrom.set(from);
+    this._dateTo.set(to);
+    this.loadPage(0, this._pageSize());
+  }
+
+  /** Filtra por rango de monto total. */
+  setAmountRange(min: number | null, max: number | null): void {
+    this._minAmount.set(min);
+    this._maxAmount.set(max);
+    this.loadPage(0, this._pageSize());
+  }
+
+  /** Limpia todos los filtros del sidebar y la búsqueda de texto. */
+  clearFilters(): void {
+    this._statusFilter.set(null);
+    this._dateFrom.set(null);
+    this._dateTo.set(null);
+    this._minAmount.set(null);
+    this._maxAmount.set(null);
+    this._searchTerm.set('');
     this.loadPage(0, this._pageSize());
   }
 
@@ -148,7 +202,6 @@ export class InvoiceFacade {
             if (navigateAfter) {
               this.router.navigate(navigateAfter);
             } else {
-              // Si era el último ítem de una página no-inicial, retroceder una página
               const targetPage = this._invoices().length === 1 && this._currentPage() > 0
                 ? this._currentPage() - 1
                 : this._currentPage();

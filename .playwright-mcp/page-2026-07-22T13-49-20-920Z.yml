@@ -1,0 +1,109 @@
+- generic [ref=f22e2]:
+  - generic [ref=f22e3]:
+    - link "FacturasApp" [ref=f22e316] [cursor=pointer]:
+      - /url: /invoices
+      - img [ref=f22e5]: receipt_long
+    - button "Facturas" [ref=f22e317]:
+      - img [ref=f22e13]: list
+    - button [ref=f22e17] [cursor=pointer]:
+      - img [ref=f22e18]: dark_mode
+    - generic [ref=f22e21]:
+      - img [ref=f22e22]: account_circle
+      - text: qatester
+    - button "Salir" [ref=f22e318]:
+      - img [ref=f22e24]: logout
+    - button "Nueva" [ref=f22e319]:
+      - img [ref=f22e29]: add
+  - main [ref=f22e11]:
+    - generic [ref=f22e720]:
+      - generic [ref=f22e721]:
+        - button [ref=f22e722] [cursor=pointer]:
+          - img [ref=f22e723]: arrow_back
+        - heading "Editar Factura" [level=1] [ref=f22e727]
+      - generic [ref=f22e728]:
+        - generic [ref=f22e729]:
+          - generic [ref=f22e730]:
+            - generic [ref=f22e731]: Información de la Factura
+            - generic [ref=f22e734]:
+              - generic [ref=f22e735]:
+                - generic [ref=f22e736]:
+                  - img [ref=f22e737]: tag
+                  - generic [ref=f22e738]:
+                    - paragraph [ref=f22e739]: Número de Factura
+                    - paragraph [ref=f22e740]: FAC-2026-0008
+                - generic [ref=f22e743]:
+                  - generic [ref=f22e744]:
+                    - text: Fecha de Emisión
+                    - generic [ref=f22e745]: "*"
+                  - textbox "Fecha de Emisión" [ref=f22e747]: 7/21/2026
+                  - button "Open calendar" [ref=f22e750] [cursor=pointer]
+              - generic [ref=f22e756]:
+                - generic [ref=f22e759] [cursor=pointer]:
+                  - generic: Estado
+                  - combobox "Estado Pendiente" [ref=f22e762]:
+                    - generic [ref=f22e763]: Pendiente
+                - generic [ref=f22e773]:
+                  - generic [ref=f22e774]:
+                    - text: Impuesto (%)
+                    - generic [ref=f22e775]: "*"
+                  - spinbutton "Impuesto (%)" [ref=f22e777]: "19"
+                  - generic [ref=f22e778]: "%"
+          - generic [ref=f22e780]:
+            - generic [ref=f22e781]: Datos del Cliente
+            - generic [ref=f22e784]:
+              - generic [ref=f22e787]:
+                - generic [ref=f22e788]:
+                  - text: Nombre
+                  - generic [ref=f22e789]: "*"
+                - textbox "Nombre" [ref=f22e791]: QA Test Cliente SAS
+              - generic [ref=f22e795]:
+                - generic [ref=f22e796]:
+                  - text: Email
+                  - generic [ref=f22e797]: "*"
+                - textbox "Email" [ref=f22e799]: qa.test@cliente.com
+              - generic [ref=f22e803]:
+                - generic [ref=f22e804]:
+                  - text: Dirección
+                  - generic [ref=f22e805]: "*"
+                - textbox "Dirección" [ref=f22e807]: Calle Falsa 123, Bogotá
+        - generic [ref=f22e809]:
+          - generic [ref=f22e810]: Líneas de Factura
+          - generic [ref=f22e813]:
+            - generic [ref=f22e814]:
+              - generic [ref=f22e815]: Descripción
+              - generic [ref=f22e816]: Cantidad
+              - generic [ref=f22e817]: Precio Unit.
+              - generic [ref=f22e818]: Total
+            - generic [ref=f22e821]:
+              - textbox "Descripción del servicio o producto" [ref=f22e826]: Servicio de consultoría QA
+              - spinbutton [ref=f22e832]: "2"
+              - generic [ref=f22e836]:
+                - generic [ref=f22e837]: $
+                - spinbutton [ref=f22e839]: "500"
+              - generic [ref=f22e841]: $1,000.00
+              - generic [ref=f22e842]:
+                - button [disabled]:
+                  - img: remove_circle_outline
+            - button "Agregar línea" [ref=f22e843]:
+              - img [ref=f22e844]: add
+            - separator [ref=f22e848]
+            - generic [ref=f22e849]:
+              - generic [ref=f22e850]:
+                - generic [ref=f22e851]: Subtotal
+                - generic [ref=f22e852]: $1,000.00
+              - generic [ref=f22e853]:
+                - generic [ref=f22e854]: Impuesto (19%)
+                - generic [ref=f22e855]: $190.00
+              - generic [ref=f22e856]:
+                - generic [ref=f22e857]: Total
+                - generic [ref=f22e858]: $1,190.00
+        - generic [ref=f22e863]:
+          - generic: Notas (opcional)
+          - textbox "Notas (opcional)" [ref=f22e866]:
+            - /placeholder: Condiciones de pago, observaciones...
+        - generic [ref=f22e868]:
+          - button "Cancelar" [ref=f22e869]
+          - button [ref=f22e873]:
+            - generic [ref=f22e874]:
+              - img [ref=f22e875]: save
+              - text: Guardar Cambios

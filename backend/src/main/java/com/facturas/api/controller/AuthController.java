@@ -66,16 +66,26 @@ public class AuthController {
      */
     @GetMapping("/me")
     public ResponseEntity<UserInfoDTO> me(Authentication authentication) {
-        return ResponseEntity.ok(new UserInfoDTO(authentication.getName()));
+        String role = authentication.getAuthorities().stream()
+                .findFirst()
+                .map(a -> a.getAuthority().replaceFirst("^ROLE_", ""))
+                .orElse("USER");
+        return ResponseEntity.ok(new UserInfoDTO(authentication.getName(), role));
     }
 
     /**
      * POST /auth/logout
      * Clears the JWT cookie by setting Max-Age=0 and an empty value.
+     * If a valid session is present, also bumps the user's tokenVersion server-side
+     * (see AuthService.invalidateTokens) so the cookie's JWT is rejected immediately
+     * instead of remaining valid until its natural expiration.
      * Permitted without authentication so users with an expired token can still log out.
      */
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(HttpServletResponse response) {
+    public ResponseEntity<Void> logout(Authentication authentication, HttpServletResponse response) {
+        if (authentication != null) {
+            authService.invalidateTokens(authentication.getName());
+        }
         response.addHeader(HttpHeaders.SET_COOKIE, clearJwtCookie().toString());
         return ResponseEntity.ok().build();
     }

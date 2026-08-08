@@ -11,4 +11,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class UserInfoDTO {
     private final String username;
+    private final String role;
 }

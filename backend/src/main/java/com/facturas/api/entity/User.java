@@ -28,6 +28,18 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false, length = 20)
+    private String role = "USER";
+
+    /**
+     * Bumped on logout (and would be bumped on password reset/"log out everywhere").
+     * JwtAuthFilter rejects any token whose "tv" claim doesn't match this value,
+     * so a stolen token stops working as soon as the legitimate user logs out —
+     * instead of staying valid until natural expiration.
+     */
+    @Column(name = "token_version", nullable = false)
+    private int tokenVersion = 0;
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;
@@ -35,7 +47,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role));
     }
 
     @Override public boolean isAccountNonExpired()     { return true; }

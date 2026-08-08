@@ -42,6 +42,17 @@ public class AuthService {
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new BadCredentialsException("Credenciales inválidas");
         }
-        return jwtService.generateToken(user.getUsername());
+        return jwtService.generateToken(user.getUsername(), user.getTokenVersion(), user.getRole());
+    }
+
+    /**
+     * Bumps the user's tokenVersion so every JWT issued before this call is
+     * rejected by JwtAuthFilter, regardless of its expiration. Called on logout
+     * so a copied/stolen cookie can't outlive the session that logged out.
+     */
+    @Transactional
+    public void invalidateTokens(String username) {
+        userRepository.findByUsername(username)
+                .ifPresent(user -> user.setTokenVersion(user.getTokenVersion() + 1));
     }
 }

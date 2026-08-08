@@ -1,0 +1,77 @@
+- generic [active] [ref=f22e1]:
+  - generic [ref=f22e2]:
+    - generic [ref=f22e3]:
+      - link "FacturasApp" [ref=f22e316] [cursor=pointer]:
+        - /url: /invoices
+        - img [ref=f22e5]: receipt_long
+      - button "Facturas" [ref=f22e317]:
+        - img [ref=f22e13]: list
+      - button [ref=f22e17] [cursor=pointer]:
+        - img [ref=f22e18]: dark_mode
+      - generic [ref=f22e21]:
+        - img [ref=f22e22]: account_circle
+        - text: qatester
+      - button "Salir" [ref=f22e318]:
+        - img [ref=f22e24]: logout
+      - button "Nueva" [ref=f22e319]:
+        - img [ref=f22e29]: add
+    - main [ref=f22e11]:
+      - generic [ref=f22e636]:
+        - generic [ref=f22e637]:
+          - button [ref=f22e638] [cursor=pointer]:
+            - img [ref=f22e639]: arrow_back
+          - button [ref=f22e642]:
+            - generic [ref=f22e643]:
+              - img [ref=f22e644]: picture_as_pdf
+              - text: Exportar PDF
+          - button "Editar" [ref=f22e647]:
+            - img [ref=f22e648]: edit
+          - button "Eliminar" [ref=f22e652]:
+            - img [ref=f22e653]: delete
+        - generic [ref=f22e658]:
+          - generic [ref=f22e659]:
+            - generic [ref=f22e660]:
+              - img [ref=f22e661]: receipt_long
+              - generic [ref=f22e662]: FacturasApp
+            - generic [ref=f22e663]:
+              - heading "FAC-2026-0008" [level=2] [ref=f22e664]
+              - generic [ref=f22e665]: Pendiente
+          - separator [ref=f22e668]
+          - generic [ref=f22e669]:
+            - generic [ref=f22e670]:
+              - paragraph [ref=f22e671]: Facturado a
+              - paragraph [ref=f22e672]: QA Test Cliente SAS
+              - paragraph [ref=f22e673]: qa.test@cliente.com
+              - paragraph [ref=f22e674]: Calle Falsa 123, Bogotá
+            - generic [ref=f22e676]:
+              - paragraph [ref=f22e677]: Fecha de emisión
+              - paragraph [ref=f22e678]: 22/07/2026
+          - separator [ref=f22e679]
+          - table [ref=f22e680]:
+            - rowgroup [ref=f22e681]:
+              - row [ref=f22e682]:
+                - columnheader "Descripción" [ref=f22e683]
+                - columnheader "Cantidad" [ref=f22e684]
+                - columnheader "Precio Unit." [ref=f22e685]
+                - columnheader "Total" [ref=f22e686]
+            - rowgroup [ref=f22e687]:
+              - row [ref=f22e688]:
+                - cell "Servicio de consultoría QA" [ref=f22e689]
+                - cell "2" [ref=f22e690]
+                - cell "$500.00" [ref=f22e691]
+                - cell "$1,000.00" [ref=f22e692]
+          - generic [ref=f22e694]:
+            - generic [ref=f22e695]:
+              - generic [ref=f22e696]: Subtotal
+              - generic [ref=f22e697]: $1,000.00
+            - generic [ref=f22e698]:
+              - generic [ref=f22e699]: Impuesto (19%)
+              - generic [ref=f22e700]: $190.00
+            - separator [ref=f22e701]
+            - generic [ref=f22e702]:
+              - generic [ref=f22e703]: Total
+              - generic [ref=f22e704]: $1,190.00
+          - paragraph [ref=f22e706]: Creada el 22/07/2026 09:49
+  - generic [ref=f22e712]:
+    - generic [ref=f22e713]: Factura creada
+    - button "Cerrar" [ref=f22e715]

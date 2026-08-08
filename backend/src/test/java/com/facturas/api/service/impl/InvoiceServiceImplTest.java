@@ -32,6 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -485,10 +486,10 @@ class InvoiceServiceImplTest {
         Invoice inv1 = buildSavedInvoice(1L, "FAC-2026-0001", InvoiceStatus.PENDING);
         Invoice inv2 = buildSavedInvoice(2L, "FAC-2026-0002", InvoiceStatus.PAID);
         Pageable pageable = PageRequest.of(0, 50);
-        when(invoiceRepository.findAllByOrderByIssueDateDesc(pageable))
+        when(invoiceRepository.findByFilters(isNull(), isNull(), isNull(), isNull(), isNull(), isNull(), any(Pageable.class)))
                 .thenReturn(new PageImpl<>(List.of(inv1, inv2), pageable, 2));
 
-        Page<InvoiceResponseDTO> result = invoiceService.getAllInvoices(pageable, null);
+        Page<InvoiceResponseDTO> result = invoiceService.getAllInvoices(pageable, null, null, null, null, null, null);
 
         assertThat(result.getContent()).hasSize(2);
         assertThat(result.getContent().get(0).getInvoiceNumber()).isEqualTo("FAC-2026-0001");
@@ -498,10 +499,10 @@ class InvoiceServiceImplTest {
     @Test
     void getAllInvoices_emptyRepository_returnsEmptyPage() {
         Pageable pageable = PageRequest.of(0, 50);
-        when(invoiceRepository.findAllByOrderByIssueDateDesc(pageable))
+        when(invoiceRepository.findByFilters(isNull(), isNull(), isNull(), isNull(), isNull(), isNull(), any(Pageable.class)))
                 .thenReturn(new PageImpl<>(List.of(), pageable, 0));
 
-        Page<InvoiceResponseDTO> result = invoiceService.getAllInvoices(pageable, null);
+        Page<InvoiceResponseDTO> result = invoiceService.getAllInvoices(pageable, null, null, null, null, null, null);
 
         assertThat(result.getContent()).isNotNull().isEmpty();
         assertThat(result.getTotalElements()).isEqualTo(0);

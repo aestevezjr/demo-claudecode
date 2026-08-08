@@ -1,0 +1,159 @@
+- generic [ref=f7e2]:
+  - generic [ref=f7e3]:
+    - link "FacturasApp" [ref=f7e4] [cursor=pointer]:
+      - /url: /invoices
+      - img [ref=f7e5]: receipt_long
+    - button "Facturas" [ref=f7e46]:
+      - img [ref=f7e47]: list
+    - button [ref=f7e51] [cursor=pointer]:
+      - img [ref=f7e52]: dark_mode
+    - generic [ref=f7e55]:
+      - img [ref=f7e56]: account_circle
+      - text: qatester
+    - button "Salir" [ref=f7e57]:
+      - img [ref=f7e58]: logout
+    - button "Nueva" [ref=f7e62]:
+      - img [ref=f7e63]: add
+  - main [ref=f7e11]:
+    - generic [ref=f7e68]:
+      - generic [ref=f7e69]:
+        - generic [ref=f7e70]:
+          - button [ref=f7e71] [cursor=pointer]:
+            - img [ref=f7e72]: filter_list_off
+          - generic [ref=f7e75]:
+            - heading "Facturas" [level=1] [ref=f7e76]
+            - paragraph [ref=f7e77]: Gestiona todos tus documentos de cobro
+        - button "Nueva Factura" [ref=f7e78]:
+          - img [ref=f7e79]: add
+      - generic [ref=f7e83]:
+        - complementary [ref=f7e84]:
+          - generic [ref=f7e85]:
+            - generic [ref=f7e86]: Filtros
+            - generic [ref=f7e88]:
+              - paragraph [ref=f7e89]: Estado
+              - radiogroup [ref=f7e90]:
+                - generic [ref=f7e92]:
+                  - radio "Todos" [checked] [ref=f7e95] [cursor=pointer]
+                  - generic [ref=f7e99]: Todos
+                - generic [ref=f7e101]:
+                  - radio "Pendiente" [ref=f7e104] [cursor=pointer]
+                  - generic [ref=f7e107]: Pendiente
+                - generic [ref=f7e109]:
+                  - radio "Pagada" [ref=f7e112] [cursor=pointer]
+                  - generic [ref=f7e115]: Pagada
+                - generic [ref=f7e117]:
+                  - radio "Cancelada" [ref=f7e120] [cursor=pointer]
+                  - generic [ref=f7e123]: Cancelada
+            - separator [ref=f7e124]
+            - generic [ref=f7e125]:
+              - paragraph [ref=f7e126]: Fecha de emisión
+              - generic [ref=f7e129]:
+                - generic: Desde
+                - textbox "Desde" [ref=f7e132]
+                - button "Open calendar" [ref=f7e135] [cursor=pointer]
+              - generic [ref=f7e142]:
+                - generic: Hasta
+                - textbox "Hasta" [ref=f7e145]
+                - button "Open calendar" [ref=f7e148] [cursor=pointer]
+            - separator [ref=f7e153]
+            - generic [ref=f7e154]:
+              - paragraph [ref=f7e155]: Monto total (USD)
+              - generic [ref=f7e158]:
+                - generic: Mínimo
+                - spinbutton "Mínimo" [ref=f7e161]
+              - generic [ref=f7e164]:
+                - generic: Máximo
+                - spinbutton "Máximo" [ref=f7e167]
+        - generic [ref=f7e169]:
+          - generic [ref=f7e170]:
+            - img [ref=f7e171]: search
+            - textbox "Buscar por cliente o ítem..." [ref=f7e172]
+          - generic [ref=f7e173]:
+            - generic [ref=f7e174]: Número
+            - generic [ref=f7e175]: Fecha
+            - generic [ref=f7e176]: Cliente
+            - generic [ref=f7e177]: Estado
+            - generic [ref=f7e178]: Total
+          - generic [ref=f7e180] [cursor=pointer]:
+            - generic [ref=f7e181]: FAC-2026-0006
+            - generic [ref=f7e182]: 22/07/2026
+            - generic [ref=f7e183]: Test
+            - generic [ref=f7e184]: Pendiente
+            - generic [ref=f7e188]: $11.90
+            - generic [ref=f7e189]:
+              - button [ref=f7e190]:
+                - img [ref=f7e191]: visibility
+              - button [ref=f7e194]:
+                - img [ref=f7e195]: edit
+              - button [ref=f7e198]:
+                - img [ref=f7e199]: delete_outline
+          - generic [ref=f7e202] [cursor=pointer]:
+            - generic [ref=f7e203]: FAC-2026-0005
+            - generic [ref=f7e204]: 29/06/2026
+            - generic [ref=f7e205]: Davivienda S.A.
+            - generic [ref=f7e206]: Pendiente
+            - generic [ref=f7e210]: $39,270.00
+            - generic [ref=f7e211]:
+              - button [ref=f7e212]:
+                - img [ref=f7e213]: visibility
+              - button [ref=f7e216]:
+                - img [ref=f7e217]: edit
+              - button [ref=f7e220]:
+                - img [ref=f7e221]: delete_outline
+          - generic [ref=f7e224] [cursor=pointer]:
+            - generic [ref=f7e225]: FAC-2026-0004
+            - generic [ref=f7e226]: 10/05/2026
+            - generic [ref=f7e227]: Mineros S.A.
+            - generic [ref=f7e228]: Pendiente
+            - generic [ref=f7e232]: $8,687.00
+            - generic [ref=f7e233]:
+              - button [ref=f7e234]:
+                - img [ref=f7e235]: visibility
+              - button [ref=f7e238]:
+                - img [ref=f7e239]: edit
+              - button [ref=f7e242]:
+                - img [ref=f7e243]: delete_outline
+          - generic [ref=f7e246] [cursor=pointer]:
+            - generic [ref=f7e247]: FAC-2026-0003
+            - generic [ref=f7e248]: 22/03/2026
+            - generic [ref=f7e249]: Fundación Santa Fe
+            - generic [ref=f7e250]: Pagada
+            - generic [ref=f7e254]: $17,400.00
+            - generic [ref=f7e255]:
+              - button [ref=f7e256]:
+                - img [ref=f7e257]: visibility
+              - button [ref=f7e260]:
+                - img [ref=f7e261]: edit
+              - button [ref=f7e264]:
+                - img [ref=f7e265]: delete_outline
+          - generic [ref=f7e268] [cursor=pointer]:
+            - generic [ref=f7e269]: FAC-2026-0002
+            - generic [ref=f7e270]: 14/02/2026
+            - generic [ref=f7e271]: Postobón S.A.
+            - generic [ref=f7e272]: Pendiente
+            - generic [ref=f7e276]: $4,284.00
+            - generic [ref=f7e277]:
+              - button [ref=f7e278]:
+                - img [ref=f7e279]: visibility
+              - button [ref=f7e282]:
+                - img [ref=f7e283]: edit
+              - button [ref=f7e286]:
+                - img [ref=f7e287]: delete_outline
+          - generic [ref=f7e291]:
+            - generic [ref=f7e292]: Mostrando 1–5 de 31
+            - navigation "Paginación" [ref=f7e293]:
+              - button "Primera página" [disabled]: Primera
+              - button "Anterior" [disabled]: ‹
+              - button "1" [ref=f7e294] [cursor=pointer]
+              - button "2" [ref=f7e295] [cursor=pointer]
+              - button "3" [ref=f7e296] [cursor=pointer]
+              - button "4" [ref=f7e297] [cursor=pointer]
+              - button "5" [ref=f7e298] [cursor=pointer]
+              - button "Siguiente" [ref=f7e299] [cursor=pointer]: ›
+              - button "Última página" [ref=f7e300] [cursor=pointer]: Última
+            - generic [ref=f7e301]:
+              - generic [ref=f7e302]: Por página
+              - combobox "Por página" [ref=f7e303] [cursor=pointer]:
+                - option "5" [selected]
+                - option "10"
+                - option "15"

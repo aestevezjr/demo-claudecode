@@ -23,8 +23,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * - /api/**   : app.rate-limit.max-requests (default 60/min)
  * - /auth/login, /auth/register: app.rate-limit.auth-max-requests (default 10/min)
  *
- * Security note on X-Forwarded-For: intentionally ignored — no trusted reverse proxy
- * in this demo. Accepting that header would let clients spoof their IP.
+ * Client IP resolution: by default uses request.getRemoteAddr(). When this app is
+ * deployed behind a reverse proxy / load balancer, the socket peer is the proxy for
+ * EVERY client, which would collapse all users into a single shared bucket and
+ * effectively disable the limit. Set app.rate-limit.trust-proxy-headers=true ONLY if
+ * the app sits behind a proxy you control that always overwrites (never merely
+ * appends to) X-Forwarded-For — otherwise a client can spoof that header and bypass
+ * the limit entirely.
  */
 @Component
 @Order(2)
@@ -35,6 +40,9 @@ public class RateLimitFilter extends OncePerRequestFilter {
 
     @Value("${app.rate-limit.auth-max-requests:10}")
     private int authMaxRequestsPerMinute;
+
+    @Value("${app.rate-limit.trust-proxy-headers:false}")
+    private boolean trustProxyHeaders;
 
     private static final int RETRY_AFTER_SECONDS = 60;
 
@@ -49,7 +57,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
             throws IOException, ServletException {
 
         String path = request.getRequestURI();
-        String clientIp = request.getRemoteAddr();
+        String clientIp = resolveClientIp(request);
 
         // Brute-force protection on auth endpoints
         if (path.startsWith("/auth/login") || path.startsWith("/auth/register")) {
@@ -74,6 +82,20 @@ public class RateLimitFilter extends OncePerRequestFilter {
         }
 
         chain.doFilter(request, response);
+    }
+
+    /**
+     * X-Forwarded-For may contain a client-supplied chain of IPs (client, proxy1, proxy2...);
+     * the first entry is the original client as seen by the nearest trusted proxy.
+     */
+    private String resolveClientIp(HttpServletRequest request) {
+        if (trustProxyHeaders) {
+            String forwardedFor = request.getHeader("X-Forwarded-For");
+            if (forwardedFor != null && !forwardedFor.isBlank()) {
+                return forwardedFor.split(",")[0].trim();
+            }
+        }
+        return request.getRemoteAddr();
     }
 
     private Bucket newBucket(int maxRequests) {

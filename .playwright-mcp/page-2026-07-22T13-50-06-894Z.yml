@@ -1,0 +1,163 @@
+- generic [active] [ref=f22e1]:
+  - generic [ref=f22e2]:
+    - generic [ref=f22e3]:
+      - link "FacturasApp" [ref=f22e1010] [cursor=pointer]:
+        - /url: /invoices
+        - img [ref=f22e5]: receipt_long
+      - button "Facturas" [ref=f22e1011]:
+        - img [ref=f22e13]: list
+      - button [ref=f22e17] [cursor=pointer]:
+        - img [ref=f22e18]: dark_mode
+      - generic [ref=f22e21]:
+        - img [ref=f22e22]: account_circle
+        - text: qatester
+      - button "Salir" [ref=f22e1012]:
+        - img [ref=f22e24]: logout
+      - button "Nueva" [ref=f22e1013]:
+        - img [ref=f22e29]: add
+    - main [ref=f22e11]:
+      - generic [ref=f22e1015]:
+        - generic [ref=f22e1016]:
+          - generic [ref=f22e1017]:
+            - button [ref=f22e1018] [cursor=pointer]:
+              - img [ref=f22e1019]: filter_list_off
+            - generic [ref=f22e1022]:
+              - heading "Facturas" [level=1] [ref=f22e1023]
+              - paragraph [ref=f22e1024]: Gestiona todos tus documentos de cobro
+          - button "Nueva Factura" [ref=f22e1025]:
+            - img [ref=f22e1026]: add
+        - generic [ref=f22e1030]:
+          - complementary [ref=f22e1031]:
+            - generic [ref=f22e1032]:
+              - generic [ref=f22e1033]: Filtros
+              - generic [ref=f22e1035]:
+                - paragraph [ref=f22e1036]: Estado
+                - radiogroup [ref=f22e1037]:
+                  - generic [ref=f22e1039]:
+                    - radio "Todos" [checked] [ref=f22e1042] [cursor=pointer]
+                    - generic [ref=f22e1046]: Todos
+                  - generic [ref=f22e1048]:
+                    - radio "Pendiente" [ref=f22e1051] [cursor=pointer]
+                    - generic [ref=f22e1054]: Pendiente
+                  - generic [ref=f22e1056]:
+                    - radio "Pagada" [ref=f22e1059] [cursor=pointer]
+                    - generic [ref=f22e1062]: Pagada
+                  - generic [ref=f22e1064]:
+                    - radio "Cancelada" [ref=f22e1067] [cursor=pointer]
+                    - generic [ref=f22e1070]: Cancelada
+              - separator [ref=f22e1071]
+              - generic [ref=f22e1072]:
+                - paragraph [ref=f22e1073]: Fecha de emisión
+                - generic [ref=f22e1076]:
+                  - generic: Desde
+                  - textbox "Desde" [ref=f22e1079]
+                  - button "Open calendar" [ref=f22e1082] [cursor=pointer]
+                - generic [ref=f22e1089]:
+                  - generic: Hasta
+                  - textbox "Hasta" [ref=f22e1092]
+                  - button "Open calendar" [ref=f22e1095] [cursor=pointer]
+              - separator [ref=f22e1100]
+              - generic [ref=f22e1101]:
+                - paragraph [ref=f22e1102]: Monto total (USD)
+                - generic [ref=f22e1105]:
+                  - generic: Mínimo
+                  - spinbutton "Mínimo" [ref=f22e1108]
+                - generic [ref=f22e1111]:
+                  - generic: Máximo
+                  - spinbutton "Máximo" [ref=f22e1114]
+          - generic [ref=f22e1116]:
+            - generic [ref=f22e1117]:
+              - img [ref=f22e1118]: search
+              - textbox "Buscar por cliente o ítem..." [ref=f22e1119]
+            - generic [ref=f22e1120]:
+              - generic [ref=f22e1121]: Número
+              - generic [ref=f22e1122]: Fecha
+              - generic [ref=f22e1123]: Cliente
+              - generic [ref=f22e1124]: Estado
+              - generic [ref=f22e1125]: Total
+            - generic [ref=f22e1127] [cursor=pointer]:
+              - generic [ref=f22e1128]: FAC-2026-0005
+              - generic [ref=f22e1129]: 29/06/2026
+              - generic [ref=f22e1130]: Davivienda S.A.
+              - generic [ref=f22e1131]: Pendiente
+              - generic [ref=f22e1135]: $39,270.00
+              - generic [ref=f22e1136]:
+                - button [ref=f22e1137]:
+                  - img [ref=f22e1138]: visibility
+                - button [ref=f22e1141]:
+                  - img [ref=f22e1142]: edit
+                - button [ref=f22e1145]:
+                  - img [ref=f22e1146]: delete_outline
+            - generic [ref=f22e1149] [cursor=pointer]:
+              - generic [ref=f22e1150]: FAC-2026-0004
+              - generic [ref=f22e1151]: 10/05/2026
+              - generic [ref=f22e1152]: Mineros S.A.
+              - generic [ref=f22e1153]: Pendiente
+              - generic [ref=f22e1157]: $8,687.00
+              - generic [ref=f22e1158]:
+                - button [ref=f22e1159]:
+                  - img [ref=f22e1160]: visibility
+                - button [ref=f22e1163]:
+                  - img [ref=f22e1164]: edit
+                - button [ref=f22e1167]:
+                  - img [ref=f22e1168]: delete_outline
+            - generic [ref=f22e1171] [cursor=pointer]:
+              - generic [ref=f22e1172]: FAC-2026-0003
+              - generic [ref=f22e1173]: 22/03/2026
+              - generic [ref=f22e1174]: Fundación Santa Fe
+              - generic [ref=f22e1175]: Pagada
+              - generic [ref=f22e1179]: $17,400.00
+              - generic [ref=f22e1180]:
+                - button [ref=f22e1181]:
+                  - img [ref=f22e1182]: visibility
+                - button [ref=f22e1185]:
+                  - img [ref=f22e1186]: edit
+                - button [ref=f22e1189]:
+                  - img [ref=f22e1190]: delete_outline
+            - generic [ref=f22e1193] [cursor=pointer]:
+              - generic [ref=f22e1194]: FAC-2026-0002
+              - generic [ref=f22e1195]: 14/02/2026
+              - generic [ref=f22e1196]: Postobón S.A.
+              - generic [ref=f22e1197]: Pendiente
+              - generic [ref=f22e1201]: $4,284.00
+              - generic [ref=f22e1202]:
+                - button [ref=f22e1203]:
+                  - img [ref=f22e1204]: visibility
+                - button [ref=f22e1207]:
+                  - img [ref=f22e1208]: edit
+                - button [ref=f22e1211]:
+                  - img [ref=f22e1212]: delete_outline
+            - generic [ref=f22e1215] [cursor=pointer]:
+              - generic [ref=f22e1216]: FAC-2026-0001
+              - generic [ref=f22e1217]: 08/01/2026
+              - generic [ref=f22e1218]: Rappi Colombia
+              - generic [ref=f22e1219]: Pagada
+              - generic [ref=f22e1223]: $11,900.00
+              - generic [ref=f22e1224]:
+                - button [ref=f22e1225]:
+                  - img [ref=f22e1226]: visibility
+                - button [ref=f22e1229]:
+                  - img [ref=f22e1230]: edit
+                - button [ref=f22e1233]:
+                  - img [ref=f22e1234]: delete_outline
+            - generic [ref=f22e1238]:
+              - generic [ref=f22e1239]: Mostrando 1–5 de 30
+              - navigation "Paginación" [ref=f22e1240]:
+                - button "Primera página" [disabled]: Primera
+                - button "Anterior" [disabled]: ‹
+                - button "1" [ref=f22e1241] [cursor=pointer]
+                - button "2" [ref=f22e1242] [cursor=pointer]
+                - button "3" [ref=f22e1243] [cursor=pointer]
+                - button "4" [ref=f22e1244] [cursor=pointer]
+                - button "5" [ref=f22e1245] [cursor=pointer]
+                - button "Siguiente" [ref=f22e1246] [cursor=pointer]: ›
+                - button "Última página" [ref=f22e1247] [cursor=pointer]: Última
+              - generic [ref=f22e1248]:
+                - generic [ref=f22e1249]: Por página
+                - combobox "Por página" [ref=f22e1250] [cursor=pointer]:
+                  - option "5" [selected]
+                  - option "10"
+                  - option "15"
+  - generic [ref=f22e1256]:
+    - generic [ref=f22e1257]: Factura eliminada
+    - button "Cerrar" [ref=f22e1259]

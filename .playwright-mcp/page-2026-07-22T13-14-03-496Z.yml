@@ -1,0 +1,29 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e2]:
+    - generic [ref=f3e3]:
+      - link "FacturasApp" [ref=f3e4] [cursor=pointer]:
+        - /url: /invoices
+        - img [ref=f3e5]: receipt_long
+      - button [ref=f3e464] [cursor=pointer]:
+        - img [ref=f3e465]: dark_mode
+    - main [ref=f3e11]:
+      - generic [ref=f3e470]:
+        - generic [ref=f3e472]:
+          - generic [ref=f3e473]: FacturasApp
+          - generic [ref=f3e474]: Iniciar sesión
+        - generic [ref=f3e476]:
+          - generic [ref=f3e479]:
+            - generic [ref=f3e480]:
+              - text: Usuario
+              - generic [ref=f3e481]: "*"
+            - textbox "Usuario" [ref=f3e483]
+          - generic [ref=f3e487]:
+            - generic [ref=f3e488]:
+              - text: Contraseña
+              - generic [ref=f3e489]: "*"
+            - textbox "Contraseña" [ref=f3e491]
+          - button "Entrar" [disabled]
+        - button "¿No tienes cuenta? Regístrate" [ref=f3e494]
+  - generic [ref=f3e503]:
+    - generic [ref=f3e504]: Error al guardar la factura
+    - button "Cerrar" [ref=f3e506]

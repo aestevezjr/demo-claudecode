@@ -10,7 +10,7 @@ import { catchError, throwError } from 'rxjs';
  * With HttpOnly cookie auth, the browser sends the jwt cookie automatically on every
  * request.  This interceptor's job is now:
  *   1. Add `withCredentials: true` so the browser includes cookies on cross-origin
- *      requests (frontend :4200 → backend :8080).
+ *      requests (frontend :4200 → backend :8082).
  *   2. Manually inject the X-XSRF-TOKEN header for non-safe methods on cross-origin
  *      requests, because Angular's built-in XSRF interceptor skips absolute URLs
  *      (those starting with "http://" or "https://").
@@ -29,7 +29,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   // Angular's built-in withXsrfConfiguration skips absolute URLs, so we do it here.
   // The XSRF-TOKEN cookie is NOT HttpOnly (CookieCsrfTokenRepository.withHttpOnlyFalse()),
   // so JavaScript can read it.  Cookies are domain-scoped (not port-scoped), which means
-  // the cookie set by localhost:8080 is readable from localhost:4200.
+  // the cookie set by localhost:8082 is readable from localhost:4200.
   const csrfToken = readCsrfCookie();
   const isMutating = !['GET', 'HEAD', 'OPTIONS', 'TRACE'].includes(req.method.toUpperCase());
   if (csrfToken && isMutating) {

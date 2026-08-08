@@ -1,0 +1,109 @@
+- generic [ref=f22e2]:
+  - generic [ref=f22e3]:
+    - link "FacturasApp" [ref=f22e316] [cursor=pointer]:
+      - /url: /invoices
+      - img [ref=f22e5]: receipt_long
+    - button "Facturas" [ref=f22e317]:
+      - img [ref=f22e13]: list
+    - button [ref=f22e17] [cursor=pointer]:
+      - img [ref=f22e18]: dark_mode
+    - generic [ref=f22e21]:
+      - img [ref=f22e22]: account_circle
+      - text: qatester
+    - button "Salir" [ref=f22e318]:
+      - img [ref=f22e24]: logout
+    - button "Nueva" [ref=f22e319]:
+      - img [ref=f22e29]: add
+  - main [ref=f22e11]:
+    - generic [ref=f22e477]:
+      - generic [ref=f22e478]:
+        - button [ref=f22e479] [cursor=pointer]:
+          - img [ref=f22e480]: arrow_back
+        - heading "Nueva Factura" [level=1] [ref=f22e484]
+      - generic [ref=f22e485]:
+        - generic [ref=f22e486]:
+          - generic [ref=f22e487]:
+            - generic [ref=f22e488]: Información de la Factura
+            - generic [ref=f22e491]:
+              - generic [ref=f22e492]:
+                - generic [ref=f22e493]:
+                  - img [ref=f22e494]: tag
+                  - generic [ref=f22e495]:
+                    - paragraph [ref=f22e496]: Número de Factura
+                    - paragraph [ref=f22e497]: Se generará automáticamente
+                - generic [ref=f22e500]:
+                  - generic [ref=f22e501]:
+                    - text: Fecha de Emisión
+                    - generic [ref=f22e502]: "*"
+                  - textbox "Fecha de Emisión" [ref=f22e504]: 7/22/2026
+                  - button "Open calendar" [ref=f22e507] [cursor=pointer]
+              - generic [ref=f22e513]:
+                - generic [ref=f22e516] [cursor=pointer]:
+                  - generic: Estado
+                  - combobox "Estado Pendiente" [ref=f22e519]:
+                    - generic [ref=f22e520]: Pendiente
+                - generic [ref=f22e530]:
+                  - generic [ref=f22e531]:
+                    - text: Impuesto (%)
+                    - generic [ref=f22e532]: "*"
+                  - spinbutton "Impuesto (%)" [ref=f22e534]: "0"
+                  - generic [ref=f22e535]: "%"
+          - generic [ref=f22e537]:
+            - generic [ref=f22e538]: Datos del Cliente
+            - generic [ref=f22e541]:
+              - generic [ref=f22e544]:
+                - generic [ref=f22e545]:
+                  - text: Nombre
+                  - generic [ref=f22e546]: "*"
+                - textbox "Nombre" [ref=f22e548]
+              - generic [ref=f22e552]:
+                - generic [ref=f22e553]:
+                  - text: Email
+                  - generic [ref=f22e554]: "*"
+                - textbox "Email" [ref=f22e556]
+              - generic [ref=f22e560]:
+                - generic [ref=f22e561]:
+                  - text: Dirección
+                  - generic [ref=f22e562]: "*"
+                - textbox "Dirección" [ref=f22e564]
+        - generic [ref=f22e566]:
+          - generic [ref=f22e567]: Líneas de Factura
+          - generic [ref=f22e570]:
+            - generic [ref=f22e571]:
+              - generic [ref=f22e572]: Descripción
+              - generic [ref=f22e573]: Cantidad
+              - generic [ref=f22e574]: Precio Unit.
+              - generic [ref=f22e575]: Total
+            - generic [ref=f22e578]:
+              - textbox "Descripción del servicio o producto" [ref=f22e583]
+              - spinbutton [ref=f22e589]: "1"
+              - generic [ref=f22e593]:
+                - generic [ref=f22e594]: $
+                - spinbutton [ref=f22e596]: "0"
+              - generic [ref=f22e598]: $0.00
+              - generic [ref=f22e599]:
+                - button [disabled]:
+                  - img: remove_circle_outline
+            - button "Agregar línea" [ref=f22e600]:
+              - img [ref=f22e601]: add
+            - separator [ref=f22e605]
+            - generic [ref=f22e606]:
+              - generic [ref=f22e607]:
+                - generic [ref=f22e608]: Subtotal
+                - generic [ref=f22e609]: $0.00
+              - generic [ref=f22e610]:
+                - generic [ref=f22e611]: Impuesto (0%)
+                - generic [ref=f22e612]: $0.00
+              - generic [ref=f22e613]:
+                - generic [ref=f22e614]: Total
+                - generic [ref=f22e615]: $0.00
+        - generic [ref=f22e620]:
+          - generic: Notas (opcional)
+          - textbox "Notas (opcional)" [ref=f22e623]:
+            - /placeholder: Condiciones de pago, observaciones...
+        - generic [ref=f22e625]:
+          - button "Cancelar" [ref=f22e626]
+          - button [ref=f22e630]:
+            - generic [ref=f22e631]:
+              - img [ref=f22e632]: save
+              - text: Crear Factura

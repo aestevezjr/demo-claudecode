@@ -54,7 +54,7 @@ spring.datasource.password=TU_PASSWORD
 
 ## Levantar la Aplicación
 
-### Backend (puerto 8080)
+### Backend (puerto 8082)
 
 ```bash
 cd backend
@@ -122,7 +122,7 @@ demo-claudecode/
 
 ## API REST
 
-Base URL: `http://localhost:8080/api/v1/invoices`
+Base URL: `http://localhost:8082/api/v1/invoices`
 
 | Método | Ruta | Descripción |
 |--------|------|-------------|
@@ -136,7 +136,7 @@ Base URL: `http://localhost:8080/api/v1/invoices`
 ### Ejemplo: Crear factura
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/invoices \
+curl -X POST http://localhost:8082/api/v1/invoices \
   -H "Content-Type: application/json" \
   -d '{
     "issueDate": "2026-06-20",

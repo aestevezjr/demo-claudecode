@@ -122,7 +122,7 @@ class InvoiceControllerTest {
 
     @Test
     void getAll_returns200WithInvoicePage() throws Exception {
-        when(invoiceService.getAllInvoices(any(Pageable.class), isNull())).thenReturn(samplePage());
+        when(invoiceService.getAllInvoices(any(Pageable.class), isNull(), isNull(), isNull(), isNull(), isNull(), isNull())).thenReturn(samplePage());
 
         mockMvc.perform(get(BASE_URL))
                 .andExpect(status().isOk())
@@ -132,7 +132,7 @@ class InvoiceControllerTest {
 
     @Test
     void getAll_emptyList_returns200WithEmptyContent() throws Exception {
-        when(invoiceService.getAllInvoices(any(Pageable.class), isNull()))
+        when(invoiceService.getAllInvoices(any(Pageable.class), isNull(), isNull(), isNull(), isNull(), isNull(), isNull()))
                 .thenReturn(new PageImpl<>(List.of()));
 
         mockMvc.perform(get(BASE_URL))

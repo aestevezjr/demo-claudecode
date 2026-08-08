@@ -34,10 +34,12 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<InvoiceResponseDTO> getAllInvoices(Pageable pageable, String search) {
-        Page<Invoice> page = (search == null || search.isBlank())
-                ? invoiceRepository.findAllByOrderByIssueDateDesc(pageable)
-                : invoiceRepository.findBySearchTerm(search.trim(), pageable);
+    public Page<InvoiceResponseDTO> getAllInvoices(Pageable pageable, String search,
+            InvoiceStatus status, LocalDate dateFrom, LocalDate dateTo,
+            BigDecimal minAmount, BigDecimal maxAmount) {
+        String term = (search != null && !search.isBlank()) ? search.trim() : null;
+        Page<Invoice> page = invoiceRepository.findByFilters(
+                term, status, dateFrom, dateTo, minAmount, maxAmount, pageable);
         return page.map(this::toResponseDTO);
     }
 

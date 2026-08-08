@@ -1,0 +1,109 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - link "FacturasApp" [ref=e4] [cursor=pointer]:
+      - /url: /invoices
+      - img [ref=e5]: receipt_long
+    - button "Facturas" [ref=e50]:
+      - img [ref=e51]: list
+    - button [ref=e55] [cursor=pointer]:
+      - img [ref=e56]: dark_mode
+    - generic [ref=e59]:
+      - img [ref=e60]: account_circle
+      - text: qatester
+    - button "Salir" [ref=e61]:
+      - img [ref=e62]: logout
+    - button "Nueva" [ref=e66]:
+      - img [ref=e67]: add
+  - main [ref=e11]:
+    - generic [ref=e482]:
+      - generic [ref=e483]:
+        - button [ref=e484] [cursor=pointer]:
+          - img [ref=e485]: arrow_back
+        - heading "Nueva Factura" [level=1] [ref=e489]
+      - generic [ref=e490]:
+        - generic [ref=e491]:
+          - generic [ref=e492]:
+            - generic [ref=e493]: Información de la Factura
+            - generic [ref=e496]:
+              - generic [ref=e497]:
+                - generic [ref=e498]:
+                  - img [ref=e499]: tag
+                  - generic [ref=e500]:
+                    - paragraph [ref=e501]: Número de Factura
+                    - paragraph [ref=e502]: Se generará automáticamente
+                - generic [ref=e505]:
+                  - generic [ref=e506]:
+                    - text: Fecha de Emisión
+                    - generic [ref=e507]: "*"
+                  - textbox "Fecha de Emisión" [ref=e509]: 7/22/2026
+                  - button "Open calendar" [ref=e512] [cursor=pointer]
+              - generic [ref=e518]:
+                - generic [ref=e521] [cursor=pointer]:
+                  - generic: Estado
+                  - combobox "Estado Pendiente" [ref=e524]:
+                    - generic [ref=e525]: Pendiente
+                - generic [ref=e535]:
+                  - generic [ref=e536]:
+                    - text: Impuesto (%)
+                    - generic [ref=e537]: "*"
+                  - spinbutton "Impuesto (%)" [ref=e539]: "0"
+                  - generic [ref=e540]: "%"
+          - generic [ref=e542]:
+            - generic [ref=e543]: Datos del Cliente
+            - generic [ref=e546]:
+              - generic [ref=e549]:
+                - generic [ref=e550]:
+                  - text: Nombre
+                  - generic [ref=e551]: "*"
+                - textbox "Nombre" [ref=e553]
+              - generic [ref=e557]:
+                - generic [ref=e558]:
+                  - text: Email
+                  - generic [ref=e559]: "*"
+                - textbox "Email" [ref=e561]
+              - generic [ref=e565]:
+                - generic [ref=e566]:
+                  - text: Dirección
+                  - generic [ref=e567]: "*"
+                - textbox "Dirección" [ref=e569]
+        - generic [ref=e571]:
+          - generic [ref=e572]: Líneas de Factura
+          - generic [ref=e575]:
+            - generic [ref=e576]:
+              - generic [ref=e577]: Descripción
+              - generic [ref=e578]: Cantidad
+              - generic [ref=e579]: Precio Unit.
+              - generic [ref=e580]: Total
+            - generic [ref=e583]:
+              - textbox "Descripción del servicio o producto" [ref=e588]
+              - spinbutton [ref=e594]: "1"
+              - generic [ref=e598]:
+                - generic [ref=e599]: $
+                - spinbutton [ref=e601]: "0"
+              - generic [ref=e603]: $0.00
+              - generic [ref=e604]:
+                - button [disabled]:
+                  - img: remove_circle_outline
+            - button "Agregar línea" [ref=e605]:
+              - img [ref=e606]: add
+            - separator [ref=e610]
+            - generic [ref=e611]:
+              - generic [ref=e612]:
+                - generic [ref=e613]: Subtotal
+                - generic [ref=e614]: $0.00
+              - generic [ref=e615]:
+                - generic [ref=e616]: Impuesto (0%)
+                - generic [ref=e617]: $0.00
+              - generic [ref=e618]:
+                - generic [ref=e619]: Total
+                - generic [ref=e620]: $0.00
+        - generic [ref=e625]:
+          - generic: Notas (opcional)
+          - textbox "Notas (opcional)" [ref=e628]:
+            - /placeholder: Condiciones de pago, observaciones...
+        - generic [ref=e630]:
+          - button "Cancelar" [ref=e631]
+          - button [ref=e635]:
+            - generic [ref=e636]:
+              - img [ref=e637]: save
+              - text: Crear Factura

@@ -1,0 +1,87 @@
+- generic [ref=f22e1]:
+  - generic [ref=f22e2]:
+    - generic [ref=f22e3]:
+      - link [ref=f22e973] [cursor=pointer]:
+        - /url: /invoices
+        - img [ref=f22e5]: receipt_long
+        - generic [ref=f22e6]: FacturasApp
+      - button [ref=f22e974]:
+        - img [ref=f22e13]: list
+        - generic [ref=f22e14]: Facturas
+      - button [ref=f22e17] [cursor=pointer]:
+        - img [ref=f22e18]: dark_mode
+      - generic [ref=f22e21]:
+        - img [ref=f22e22]: account_circle
+        - text: qatester
+      - button [ref=f22e975]:
+        - img [ref=f22e24]: logout
+        - generic [ref=f22e25]: Salir
+      - button [ref=f22e976]:
+        - img [ref=f22e29]: add
+        - generic [ref=f22e30]: Nueva
+    - main [ref=f22e11]:
+      - generic [ref=f22e890]:
+        - generic [ref=f22e891]:
+          - button [ref=f22e892] [cursor=pointer]:
+            - img [ref=f22e893]: arrow_back
+          - button [ref=f22e977]:
+            - generic [ref=f22e897]:
+              - img [ref=f22e898]: picture_as_pdf
+              - text: Exportar PDF
+          - button [ref=f22e978]:
+            - img [ref=f22e902]: edit
+            - generic [ref=f22e903]: Editar
+          - button [ref=f22e979]:
+            - img [ref=f22e907]: delete
+            - generic [ref=f22e908]: Eliminar
+        - generic [ref=f22e912]:
+          - generic [ref=f22e913]:
+            - generic [ref=f22e914]:
+              - img [ref=f22e915]: receipt_long
+              - generic [ref=f22e916]: FacturasApp
+            - generic [ref=f22e917]:
+              - heading [level=2] [ref=f22e980]: FAC-2026-0008
+              - generic [ref=f22e919]: Pagada
+          - separator [ref=f22e922]
+          - generic [ref=f22e923]:
+            - generic [ref=f22e924]:
+              - paragraph [ref=f22e925]: Facturado a
+              - paragraph [ref=f22e926]: QA Test Cliente SAS
+              - paragraph [ref=f22e927]: qa.test@cliente.com
+              - paragraph [ref=f22e928]: Calle Falsa 123, Bogotá
+            - generic [ref=f22e930]:
+              - paragraph [ref=f22e931]: Fecha de emisión
+              - paragraph [ref=f22e932]: 21/07/2026
+          - separator [ref=f22e933]
+          - table [ref=f22e934]:
+            - rowgroup [ref=f22e935]:
+              - row [ref=f22e981]:
+                - columnheader [ref=f22e982]: Descripción
+                - columnheader [ref=f22e983]: Cantidad
+                - columnheader [ref=f22e984]: Precio Unit.
+                - columnheader [ref=f22e985]: Total
+            - rowgroup [ref=f22e941]:
+              - row [ref=f22e986]:
+                - cell [ref=f22e987]: Servicio de consultoría QA
+                - cell [ref=f22e988]: "3"
+                - cell [ref=f22e989]: $500.00
+                - cell [ref=f22e990]: $1,500.00
+          - generic [ref=f22e948]:
+            - generic [ref=f22e949]:
+              - generic [ref=f22e950]: Subtotal
+              - generic [ref=f22e951]: $1,500.00
+            - generic [ref=f22e952]:
+              - generic [ref=f22e953]: Impuesto (19%)
+              - generic [ref=f22e954]: $285.00
+            - separator [ref=f22e955]
+            - generic [ref=f22e956]:
+              - generic [ref=f22e957]: Total
+              - generic [ref=f22e958]: $1,785.00
+          - paragraph [ref=f22e960]: Creada el 22/07/2026 09:49
+  - dialog [ref=f22e994]:
+    - generic [ref=f22e996]:
+      - heading "Eliminar factura" [level=2] [ref=f22e997]
+      - paragraph [ref=f22e999]: ¿Estás seguro de que deseas eliminar la factura FAC-2026-0008?
+      - generic [ref=f22e1000]:
+        - button "Cancelar" [active] [ref=f22e1001]
+        - button "Eliminar" [ref=f22e1005]

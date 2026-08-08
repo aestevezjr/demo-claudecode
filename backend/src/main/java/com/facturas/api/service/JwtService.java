@@ -20,9 +20,11 @@ public class JwtService {
     @Value("${jwt.expiration}")
     private long expiration;
 
-    public String generateToken(String username) {
+    public String generateToken(String username, int tokenVersion, String role) {
         return Jwts.builder()
                 .subject(username)
+                .claim("tv", tokenVersion)
+                .claim("role", role)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSigningKey())
@@ -31,6 +33,14 @@ public class JwtService {
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
+    }
+
+    /**
+     * Returns null for tokens issued before this claim existed — callers must
+     * treat a null tokenVersion as "not valid" (fail closed), not "any version ok".
+     */
+    public Integer extractTokenVersion(String token) {
+        return extractClaim(token, claims -> claims.get("tv", Integer.class));
     }
 
     public boolean isTokenValid(String token) {

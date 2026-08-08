@@ -1,0 +1,105 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - link "FacturasApp" [ref=e4] [cursor=pointer]:
+      - /url: /invoices
+      - img [ref=e5]: receipt_long
+    - button "Facturas" [ref=e50]:
+      - img [ref=e51]: list
+    - button [ref=e55] [cursor=pointer]:
+      - img [ref=e56]: dark_mode
+    - generic [ref=e59]:
+      - img [ref=e60]: account_circle
+      - text: qatester
+    - button "Salir" [ref=e61]:
+      - img [ref=e62]: logout
+    - button "Nueva" [ref=e66]:
+      - img [ref=e67]: add
+  - main [ref=e11]:
+    - generic [ref=e72]:
+      - generic [ref=e73]:
+        - generic [ref=e74]:
+          - button [ref=e75] [cursor=pointer]:
+            - img [ref=e76]: filter_list_off
+          - generic [ref=e79]:
+            - heading "Facturas" [level=1] [ref=e80]
+            - paragraph [ref=e81]: Gestiona todos tus documentos de cobro
+        - button "Nueva Factura" [ref=e82]:
+          - img [ref=e83]: add
+      - generic [ref=e87]:
+        - complementary [ref=e88]:
+          - generic [ref=e89]:
+            - generic [ref=e90]: Filtros
+            - generic [ref=e92]:
+              - paragraph [ref=e93]: Estado
+              - radiogroup [ref=e94]:
+                - generic [ref=e96]:
+                  - radio "Todos" [checked] [ref=e99] [cursor=pointer]
+                  - generic [ref=e103]: Todos
+                - generic [ref=e105]:
+                  - radio "Pendiente" [ref=e108] [cursor=pointer]
+                  - generic [ref=e111]: Pendiente
+                - generic [ref=e113]:
+                  - radio "Pagada" [ref=e116] [cursor=pointer]
+                  - generic [ref=e119]: Pagada
+                - generic [ref=e121]:
+                  - radio "Cancelada" [ref=e124] [cursor=pointer]
+                  - generic [ref=e127]: Cancelada
+            - separator [ref=e128]
+            - generic [ref=e129]:
+              - paragraph [ref=e130]: Fecha de emisión
+              - generic [ref=e133]:
+                - generic: Desde
+                - textbox "Desde" [ref=e136]
+                - button "Open calendar" [ref=e139] [cursor=pointer]
+              - generic [ref=e146]:
+                - generic: Hasta
+                - textbox "Hasta" [ref=e149]
+                - button "Open calendar" [ref=e152] [cursor=pointer]
+            - separator [ref=e157]
+            - generic [ref=e158]:
+              - paragraph [ref=e159]: Monto total (USD)
+              - generic [ref=e162]:
+                - generic: Mínimo
+                - spinbutton "Mínimo" [ref=e165]
+              - generic [ref=e168]:
+                - generic: Máximo
+                - spinbutton "Máximo" [ref=e171]
+        - generic [ref=e173]:
+          - generic [ref=e174]:
+            - img [ref=e175]: search
+            - textbox "Buscar por cliente o ítem..." [active] [ref=e176]: Acme
+            - button [ref=e309] [cursor=pointer]:
+              - img [ref=e310]: close
+          - generic [ref=e313]:
+            - generic [ref=e314]: Número
+            - generic [ref=e315]: Fecha
+            - generic [ref=e316]: Cliente
+            - generic [ref=e317]: Estado
+            - generic [ref=e318]: Total
+          - generic [ref=e320] [cursor=pointer]:
+            - generic [ref=e321]: FAC-2024-0001
+            - generic [ref=e322]: 15/01/2024
+            - generic [ref=e323]: Acme Corp
+            - generic [ref=e324]: Pagada
+            - generic [ref=e328]: $3,927.00
+            - generic [ref=e329]:
+              - button [ref=e330]:
+                - img [ref=e331]: visibility
+              - button [ref=e334]:
+                - img [ref=e335]: edit
+              - button [ref=e338]:
+                - img [ref=e339]: delete_outline
+          - generic [ref=e343]:
+            - generic [ref=e344]: Mostrando 1–1 de 1
+            - navigation "Paginación" [ref=e345]:
+              - button "Primera página" [disabled]: Primera
+              - button "Anterior" [disabled]: ‹
+              - button "1" [ref=e346] [cursor=pointer]
+              - button "Siguiente" [disabled]: ›
+              - button "Última página" [disabled]: Última
+            - generic [ref=e347]:
+              - generic [ref=e348]: Por página
+              - combobox "Por página" [ref=e349] [cursor=pointer]:
+                - option "5" [selected]
+                - option "10"
+                - option "15"

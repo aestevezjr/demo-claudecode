@@ -1,0 +1,8 @@
+- generic [ref=f20e2]:
+  - generic [ref=f20e3]:
+    - link "FacturasApp" [ref=f20e4] [cursor=pointer]:
+      - /url: /invoices
+      - img [ref=f20e5]: receipt_long
+    - button [ref=f20e7] [cursor=pointer]:
+      - img [ref=f20e8]: dark_mode
+  - main [ref=f20e11]
