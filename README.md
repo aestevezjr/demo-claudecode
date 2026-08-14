@@ -106,6 +106,11 @@ demo-claudecode/
 │       ├── controller/             # InvoiceController — endpoints REST
 │       ├── config/                 # CorsConfig (permite localhost:4200)
 │       └── exception/              # GlobalExceptionHandler, ResourceNotFoundException
+├── mcp-weather/                    # Servidor MCP local (Node/TS) — clima y recomendación de vestimenta
+│   └── src/
+│       ├── weatherClient.ts        # Geocoding + clima actual (Open-Meteo, sin API key)
+│       ├── clothingAdvisor.ts      # Reglas de recomendación de vestimenta según el clima
+│       └── index.ts                # Servidor MCP (stdio) — tools get_weather / recommend_clothing
 └── frontend/
     └── src/app/
         ├── app.routes.ts           # Rutas lazy (loadComponent)
@@ -183,6 +188,23 @@ Respuesta `201 Created` con `invoiceNumber: "FAC-2026-0001"`, `subtotal: 1500.00
 | `unit_price` | DECIMAL(12,2) | |
 | `line_total` | DECIMAL(12,2) | `quantity × unit_price`, calculado |
 | `sort_order` | INT | Orden de aparición en la factura |
+
+## Servidor MCP — `mcp-weather`
+
+Servidor MCP local (Node.js/TypeScript, protocolo stdio) que expone dos herramientas usando la API pública de [Open-Meteo](https://open-meteo.com) (sin API key):
+
+| Tool | Descripción |
+|------|-------------|
+| `get_weather` | Clima actual y hora local de una ciudad (`{ city: string }`) |
+| `recommend_clothing` | Recomendación de vestimenta según el clima actual de una ciudad (`{ city: string }`) |
+
+```bash
+cd mcp-weather
+npm install
+npm run build   # compila TypeScript a dist/
+```
+
+Registrado en `.mcp.json` como servidor `mcp-weather` (`node mcp-weather/dist/index.js`) y habilitado en `.claude/settings.local.json`. Tras el primer build hace falta reiniciar/reconectar la sesión de Claude Code para que las tools queden disponibles como `mcp__mcp-weather__get_weather` y `mcp__mcp-weather__recommend_clothing`.
 
 ## Decisiones de Diseño
 

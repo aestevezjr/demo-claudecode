@@ -3,6 +3,10 @@
     "supabase": {
       "type": "http",
       "url": "https://mcp.supabase.com/mcp?project_ref=nyxclhzsaukcbebxrvmz"
+    },
+    "mcp-weather": {
+      "command": "node",
+      "args": ["mcp-weather/dist/index.js"]
     }
   }
 }

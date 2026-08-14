@@ -1,0 +1,24 @@
+{
+  "name": "mcp-weather",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Servidor MCP local que expone herramientas de clima/hora por ciudad y recomendación de vestimenta según el clima.",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "dev": "tsc -p tsconfig.json --watch"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "typescript": "~5.4.2",
+    "@types/node": "^20.14.0"
+  }
+}

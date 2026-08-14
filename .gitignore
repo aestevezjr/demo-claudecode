@@ -7,6 +7,10 @@ frontend/.angular/
 backend/target/
 backend/*.log
 
+# ── MCP servers ────────────────────────────────────────────────────────
+mcp-weather/node_modules/
+mcp-weather/dist/
+
 # ── IDE / OS ───────────────────────────────────────────────────────────
 .idea/
 *.iml
