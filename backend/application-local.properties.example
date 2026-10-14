@@ -1,0 +1,4 @@
+# Copy to application-local.properties (gitignored) and fill in your own values.
+spring.datasource.password=YOUR_DB_PASSWORD
+# Generate with: openssl rand -base64 64
+jwt.secret=YOUR_BASE64_SECRET

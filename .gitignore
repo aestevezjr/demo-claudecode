@@ -33,3 +33,6 @@ users.json
 
 # ── Misc ───────────────────────────────────────────────────────────────
 *.log
+
+# Local curl cookie jars
+.tmp_cookies*.txt
