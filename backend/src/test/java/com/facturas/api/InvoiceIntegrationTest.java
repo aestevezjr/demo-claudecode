@@ -17,7 +17,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -70,11 +69,13 @@ class InvoiceIntegrationTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        // Extract the JWT value from the Set-Cookie response header.
-        // Header format: "jwt=<token>; Path=/; Max-Age=86400; HttpOnly; SameSite=Strict"
-        String setCookieHeader = loginResult.getResponse().getHeader("Set-Cookie");
-        String jwtValue = setCookieHeader.split(";")[0].split("=", 2)[1];
-        jwtCookie = new Cookie("jwt", jwtValue);
+        // Look the JWT cookie up by name: the response also sets XSRF-TOKEN (CsrfCookieFilter),
+        // so the first Set-Cookie header is not necessarily the JWT.
+        Cookie issued = loginResult.getResponse().getCookie("jwt");
+        if (issued == null) {
+            throw new IllegalStateException("Login response did not set the jwt cookie");
+        }
+        jwtCookie = new Cookie("jwt", issued.getValue());
     }
 
     // ── helpers ───────────────────────────────────────────────────────────────
@@ -120,7 +121,8 @@ class InvoiceIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json(Map.of("username", "integtest", "password", "pass1234"))))
                 .andExpect(status().isOk())
-                .andExpect(header().string("Set-Cookie", containsString("jwt=")));
+                .andExpect(cookie().exists("jwt"))
+                .andExpect(cookie().httpOnly("jwt", true));
     }
 
     @Test
