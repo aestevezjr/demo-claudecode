@@ -1,216 +1,113 @@
-# FacturasApp
+# FacturasApp — AI-assisted full-stack invoicing
 
-Aplicación web full-stack para gestión de facturas con ítems de línea, cálculo automático de totales, estados y exportación a PDF.
+A full-stack invoicing application built by directing [Claude Code](https://claude.com/claude-code): I defined the architecture rules and design constraints, designed custom agents for QA, security hardening and Angular code review, and orchestrated them across the project.
 
-## Stack Tecnológico
+**Demo video:** see the FacturasApp card on [agustinestevez.vercel.app](https://agustinestevez.vercel.app/en/#projects)
 
-| Capa | Tecnología | Versión |
-|------|-----------|---------|
-| Frontend | Angular + TypeScript | 17.3.17 |
-| UI | Angular Material | 17 |
-| Backend | Spring Boot + Java | 3.4.1 / Java 17 |
-| Persistencia | Spring Data JPA + Hibernate | incluido en Boot |
-| Base de datos | MySQL | 8+ |
-| Build backend | Maven | 3.6+ |
-| PDF export | html2canvas + jsPDF | — |
+![Invoice list](docs/screenshots/facturas-app-list.webp)
 
-## Funcionalidades
+| Invoice detail | Dark theme |
+| --- | --- |
+| ![Invoice detail](docs/screenshots/facturas-app-detail.webp) | ![Dark theme](docs/screenshots/facturas-app-list-dark.webp) |
 
-- CRUD completo de facturas con ítems de línea
-- Número de factura autogenerado (`FAC-YYYY-NNNN`)
-- Totales calculados en el servidor con `BigDecimal` (subtotal, impuesto, total)
-- Preview de totales en tiempo real en el formulario (client-side)
-- Estados: `PENDING` / `PAID` / `CANCELLED`
-- Tema claro / oscuro con persistencia en `localStorage`
-- Exportación de factura a PDF (A4) mediante html2canvas + jsPDF
+## Features
 
-## Prerrequisitos
+- Invoices with line items, statuses (`PENDING`, `PAID`, `CANCELLED`) and auto-generated numbers (`FAC-YYYY-NNNN`)
+- Totals computed on the server with `BigDecimal` (subtotal, tax, total); the form previews them live
+- List with search, status / date / amount filters and pagination
+- PDF export of an invoice
+- Light and dark themes
+- Username/password accounts
 
-- Java 17+
-- Maven 3.6+
-- Node.js 18+ y Angular CLI 17 (`npm install -g @angular/cli@17`)
-- MySQL 8+ corriendo en `localhost:3306`
+## Stack
 
-## Configuración Inicial
+| Layer | Technology |
+| --- | --- |
+| Frontend | Angular 17, Angular Material, TypeScript |
+| Backend | Spring Boot 3.4, Java 17, Spring Security, Spring Data JPA |
+| Database | PostgreSQL (Supabase) |
+| Tests | JUnit 5, Mockito, MockMvc, `@DataJpaTest`, H2 |
 
-### 1. Base de datos
+## Security
 
-Ejecuta el schema una sola vez en tu cliente MySQL:
+- JWT stored in an **HttpOnly, SameSite=Strict cookie** (never exposed to JavaScript)
+- **CSRF protection** with a cookie-to-header token (`XSRF-TOKEN` / `X-XSRF-TOKEN`)
+- **Per-IP rate limiting** with Bucket4j: 60 req/min on the API, 10 req/min on login and register
+- **Security headers** (`X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy`, …)
+- Input validation and HTML stripping on user-supplied text
+- No secrets in the repository: credentials come from environment variables or a git-ignored local file
 
-```bash
-mysql -u root -p < database/schema.sql
-```
+## Tests
 
-Esto crea la base de datos `facturas_db` y las tablas `invoices` e `invoice_items`.
+The backend has **89 tests**, all passing:
 
-### 2. Credenciales MySQL
-
-Si tu contraseña difiere de `root`, edita `backend/src/main/resources/application.properties`:
-
-```properties
-spring.datasource.username=root
-spring.datasource.password=TU_PASSWORD
-```
-
-## Levantar la Aplicación
-
-### Backend (puerto 8082)
+| Suite | Tests | Scope |
+| --- | --- | --- |
+| `InvoiceServiceImplTest` | 32 | Business rules, totals, numbering (unit, Mockito) |
+| `InvoiceControllerTest` | 26 | Web layer with MockMvc: validation, status codes, payloads |
+| `InvoiceIntegrationTest` | 12 | Full stack on H2: auth cookie + CSRF, CRUD, XSS stripping |
+| `InvoiceRepositoryTest` | 9 | JPA queries with `@DataJpaTest` |
+| `SecurityHeadersFilterTest` | 5 | Response headers |
+| `RateLimitFilterTest` | 4 | Request limits per IP |
+| `FacturasApplicationTests` | 1 | Context loads |
 
 ```bash
 cd backend
-mvn spring-boot:run
+mvn test
 ```
 
-### Frontend (puerto 4200)
+## Built with Claude Code
+
+- **Project rules** in [`CLAUDE.md`](CLAUDE.md): layering, money handling, what the server must compute, schema policy.
+- **Custom agents** in [`.claude/agents`](.claude/agents):
+  - `qa-backend-engineer` — designs and runs backend tests
+  - `security-engineer` — reviews and hardens the API
+  - `angular-frontend-reviewer` — reviews Angular code against the project's conventions
+- **MCP integrations:** Supabase (database) and Playwright (browser checks).
+- **Custom MCP server** in TypeScript ([`mcp-weather`](mcp-weather)): a standalone exercise exposing weather lookup and clothing suggestions as tools.
+- **Hooks and skills:** a file-blocking `PreToolUse` hook ([`hooks`](hooks)) and installed skills.
+
+## Running locally
+
+Requirements: Java 17+, Maven 3.6+, Node.js 18+ and Angular CLI 17.
+
+### With Supabase
+
+1. Run [`database/schema.sql`](database/schema.sql) in the Supabase SQL editor (optionally [`database/seed.sql`](database/seed.sql)).
+2. Configure the backend, either with environment variables (`DB_USERNAME`, `DB_PASSWORD`, `JWT_SECRET`) or by copying [`backend/application-local.properties.example`](backend/application-local.properties.example) to `backend/application-local.properties` (git-ignored) and filling it in. Generate the JWT secret with `openssl rand -base64 64`.
+3. Start both apps:
 
 ```bash
-cd frontend
-ng serve
+cd backend && mvn spring-boot:run      # http://localhost:8082
+cd frontend && npm install && ng serve # http://localhost:4200
 ```
 
-Abre `http://localhost:4200` en el navegador.
+### Demo mode (no database setup)
 
-## Comandos Útiles
-
-### Backend
+Runs the backend on an in-memory H2 database and loads sample invoices. Nothing is persisted.
 
 ```bash
-mvn compile                          # Compilar sin ejecutar
-mvn test                             # Correr todos los tests
-mvn test -Dtest=InvoiceServiceImplTest  # Correr un test específico
+cd backend
+mvn spring-boot:run -Dspring-boot.run.useTestClasspath=true \
+  "-Dspring-boot.run.arguments=--spring.datasource.url=jdbc:h2:mem:demo;DB_CLOSE_DELAY=-1 --spring.datasource.driver-class-name=org.h2.Driver --spring.datasource.username=sa --spring.datasource.password= --spring.jpa.hibernate.ddl-auto=create-drop --spring.jpa.database-platform=org.hibernate.dialect.H2Dialect --jwt.secret=$(openssl rand -base64 64 | tr -d '\r\n')"
+
+# in another terminal, once the backend is up
+bash scripts/seed-demo-data.sh
 ```
 
-### Frontend
+Then log in at http://localhost:4200 with the demo user defined in [`scripts/seed-demo-data.sh`](scripts/seed-demo-data.sh).
 
-```bash
-ng build                             # Build de producción
-ng build --configuration development # Build de desarrollo
-ng test                              # Correr todos los tests
-ng test --include="**/invoice-list.component.spec.ts"  # Test específico
-```
+## API
 
-## Estructura del Proyecto
-
-```
-demo-claudecode/
-├── database/
-│   └── schema.sql                  # DDL — correr manualmente antes del primer inicio
-├── backend/
-│   ├── pom.xml
-│   └── src/main/java/com/facturas/api/
-│       ├── entity/                 # Invoice, InvoiceItem (JPA)
-│       ├── enums/                  # InvoiceStatus
-│       ├── repository/             # JpaRepository + queries personalizados
-│       ├── dto/                    # InvoiceRequestDTO, InvoiceResponseDTO, InvoiceItemDTO
-│       ├── service/impl/           # InvoiceServiceImpl — lógica de negocio y totales
-│       ├── controller/             # InvoiceController — endpoints REST
-│       ├── config/                 # CorsConfig (permite localhost:4200)
-│       └── exception/              # GlobalExceptionHandler, ResourceNotFoundException
-├── mcp-weather/                    # Servidor MCP local (Node/TS) — clima y recomendación de vestimenta
-│   └── src/
-│       ├── weatherClient.ts        # Geocoding + clima actual (Open-Meteo, sin API key)
-│       ├── clothingAdvisor.ts      # Reglas de recomendación de vestimenta según el clima
-│       └── index.ts                # Servidor MCP (stdio) — tools get_weather / recommend_clothing
-└── frontend/
-    └── src/app/
-        ├── app.routes.ts           # Rutas lazy (loadComponent)
-        ├── app.config.ts           # Providers globales
-        ├── core/
-        │   ├── models/             # invoice.model.ts — interfaces TypeScript
-        │   └── services/           # invoice.service.ts, theme.service.ts
-        ├── shared/components/      # ConfirmDialogComponent, StatusBadgeComponent
-        └── features/invoices/
-            ├── invoice-list/       # Tabla con mat-table
-            ├── invoice-form/       # Formulario create + edit (ReactiveForm + FormArray)
-            └── invoice-detail/     # Vista read-only + exportar PDF
-```
-
-## API REST
-
-Base URL: `http://localhost:8082/api/v1/invoices`
-
-| Método | Ruta | Descripción |
-|--------|------|-------------|
-| GET | `/` | Lista todas las facturas ordenadas por fecha desc |
-| GET | `/:id` | Obtiene una factura con sus ítems |
-| POST | `/` | Crea una factura; el número se genera en el servidor |
-| PUT | `/:id` | Actualiza una factura completa (reemplaza todos los ítems) |
-| DELETE | `/:id` | Elimina la factura y sus ítems en cascada |
-| PATCH | `/:id/status` | Actualiza solo el estado (body: string JSON crudo, ej. `"PAID"`) |
-
-### Ejemplo: Crear factura
-
-```bash
-curl -X POST http://localhost:8082/api/v1/invoices \
-  -H "Content-Type: application/json" \
-  -d '{
-    "issueDate": "2026-06-20",
-    "clientName": "Empresa ABC",
-    "clientEmail": "admin@abc.com",
-    "clientAddress": "Av. Principal 123",
-    "taxRate": 16,
-    "items": [
-      { "description": "Consultoría", "quantity": 10, "unitPrice": 150.00 }
-    ]
-  }'
-```
-
-Respuesta `201 Created` con `invoiceNumber: "FAC-2026-0001"`, `subtotal: 1500.00`, `taxAmount: 240.00`, `total: 1740.00`.
-
-## Base de Datos
-
-### Tabla `invoices`
-
-| Columna | Tipo | Notas |
-|---------|------|-------|
-| `id` | BIGINT PK | Auto-increment |
-| `invoice_number` | VARCHAR(50) UNIQUE | Generado por el backend |
-| `issue_date` | DATE | |
-| `status` | ENUM | `PENDING`, `PAID`, `CANCELLED` |
-| `client_name` | VARCHAR(255) | |
-| `client_email` | VARCHAR(255) | |
-| `client_address` | VARCHAR(500) | |
-| `subtotal` | DECIMAL(12,2) | Calculado por el backend |
-| `tax_rate` | DECIMAL(5,2) | % de impuesto |
-| `tax_amount` | DECIMAL(12,2) | Calculado por el backend |
-| `total` | DECIMAL(12,2) | Calculado por el backend |
-| `notes` | TEXT | Opcional |
-| `created_at` / `updated_at` | DATETIME | Automáticos |
-
-### Tabla `invoice_items`
-
-| Columna | Tipo | Notas |
-|---------|------|-------|
-| `id` | BIGINT PK | Auto-increment |
-| `invoice_id` | BIGINT FK | `ON DELETE CASCADE` |
-| `description` | VARCHAR(500) | |
-| `quantity` | DECIMAL(10,3) | |
-| `unit_price` | DECIMAL(12,2) | |
-| `line_total` | DECIMAL(12,2) | `quantity × unit_price`, calculado |
-| `sort_order` | INT | Orden de aparición en la factura |
-
-## Servidor MCP — `mcp-weather`
-
-Servidor MCP local (Node.js/TypeScript, protocolo stdio) que expone dos herramientas usando la API pública de [Open-Meteo](https://open-meteo.com) (sin API key):
-
-| Tool | Descripción |
-|------|-------------|
-| `get_weather` | Clima actual y hora local de una ciudad (`{ city: string }`) |
-| `recommend_clothing` | Recomendación de vestimenta según el clima actual de una ciudad (`{ city: string }`) |
-
-```bash
-cd mcp-weather
-npm install
-npm run build   # compila TypeScript a dist/
-```
-
-Registrado en `.mcp.json` como servidor `mcp-weather` (`node mcp-weather/dist/index.js`) y habilitado en `.claude/settings.local.json`. Tras el primer build hace falta reiniciar/reconectar la sesión de Claude Code para que las tools queden disponibles como `mcp__mcp-weather__get_weather` y `mcp__mcp-weather__recommend_clothing`.
-
-## Decisiones de Diseño
-
-- **`invoiceNumber` nunca viene del cliente** — el campo no existe en `InvoiceRequestDTO`; se genera en `InvoiceServiceImpl.generateInvoiceNumber()` al crear
-- **Totales siempre del servidor** — `computeTotals()` recalcula `lineTotal`, `subtotal`, `taxAmount` y `total` en cada escritura; los valores del frontend son solo preview
-- **Actualización de ítems** — el update llama `invoice.getItems().clear()` y re-agrega los ítems del DTO; requiere `@OneToMany(orphanRemoval=true)` y `@Transactional`
-- **Dinero con `BigDecimal`** — nunca se usa `double`/`float`; todos los redondeos son `RoundingMode.HALF_UP`
-- **Schema gestionado manualmente** — `ddl-auto=validate`: Hibernate verifica pero no modifica el schema; los cambios deben hacerse en `database/schema.sql` y re-ejecutarse
-- **Tema personalizado en SCSS** — no se usa el CSS prebuilt de Angular Material; el tema se define con `@use '@angular/material' as mat` para soportar el toggle claro/oscuro en runtime
+| Method | Path | Description |
+| --- | --- | --- |
+| `POST` | `/auth/register` | Create an account |
+| `POST` | `/auth/login` | Log in (sets the JWT cookie) |
+| `GET` | `/auth/me` | Current user |
+| `POST` | `/auth/logout` | Clear the session cookie |
+| `GET` | `/api/v1/invoices` | List invoices (paged, filterable) |
+| `GET` | `/api/v1/invoices/{id}` | Invoice detail |
+| `POST` | `/api/v1/invoices` | Create an invoice |
+| `PUT` | `/api/v1/invoices/{id}` | Update an invoice |
+| `PATCH` | `/api/v1/invoices/{id}/status` | Change status |
+| `DELETE` | `/api/v1/invoices/{id}` | Delete an invoice |
